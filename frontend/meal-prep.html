@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meal prep · Mise</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Mise</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html" aria-current="page">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Meal prep</h1>
+    <p class="page-intro">Pick what you're cooking this week. Mise adds up what the recipes need together, checks that against your kitchen once, and lists the prep you can do in one go.</p>
+
+    <section class="card" aria-labelledby="choose-heading">
+      <h2 id="choose-heading">Your recipes</h2>
+      <form id="plan-form" novalidate>
+        <p id="choices-status" class="hint" role="status">Loading your recipes...</p>
+        <ul id="choices" class="choice-list" hidden></ul>
+        <div id="plan-errors" class="alert alert-error" role="alert" tabindex="-1" hidden></div>
+        <div class="actions">
+          <button type="submit" id="plan-button" class="button button-primary">Plan it</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="plan" hidden>
+      <dl class="figures prep-figures">
+        <div><dt class="label">Recipes</dt><dd id="fig-recipes"></dd></div>
+        <div><dt class="label">Servings</dt><dd id="fig-servings"></dd></div>
+        <div><dt class="label">Prep once</dt><dd id="fig-prep"></dd></div>
+        <div><dt class="label">To buy</dt><dd id="fig-buy"></dd></div>
+      </dl>
+
+      <div class="home-columns">
+        <section class="home-section" aria-labelledby="prep-heading">
+          <div class="section-head"><h2 id="prep-heading">Prep together</h2></div>
+          <ol id="prep-list" class="ruled-list prep-list"></ol>
+          <p id="prep-empty" class="hint" hidden>These recipes don't share anything worth prepping ahead.</p>
+        </section>
+
+        <section class="home-section" aria-labelledby="buy-heading">
+          <div class="section-head"><h2 id="buy-heading">To buy</h2></div>
+          <ul id="buy-list" class="ruled-list"></ul>
+          <p id="buy-empty" class="hint" hidden>You have everything these recipes need.</p>
+          <div class="actions" id="buy-actions">
+            <button type="button" id="grocery-button" class="button button-secondary">Add all to grocery list</button>
+          </div>
+          <p id="grocery-result" class="alert alert-info" role="status" hidden></p>
+          <p id="covered" class="hint"></p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Mise, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/meal-prep.js?v=22"></script>
+</body>
+</html>

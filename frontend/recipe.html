@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recipe · Mise</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Mise</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="back-link"><a href="/recipes.html">Back to all recipes</a></p>
+
+    <p id="page-status" role="status">Loading recipe...</p>
+
+    <article id="recipe" hidden>
+      <div class="title-row">
+        <h1 id="recipe-title"></h1>
+        <div id="pin-slot"></div>
+      </div>
+      <p id="recipe-description" class="page-intro"></p>
+      <p id="recipe-source" class="meta" hidden>From <a id="source-link" target="_blank" rel="noopener noreferrer"></a></p>
+      <p id="cook-stats" class="meta" hidden></p>
+      <img id="recipe-photo" class="recipe-photo" alt="" hidden>
+
+      <dl class="facts">
+        <div><dt>Cuisine</dt><dd id="fact-cuisine"></dd></div>
+        <div>
+          <dt id="servings-label">Serves</dt>
+          <dd class="servings-control" role="group" aria-labelledby="servings-label">
+            <button id="servings-down" class="button button-secondary button-small" type="button" aria-label="Fewer servings">&minus;</button>
+            <output id="fact-servings" aria-live="polite"></output>
+            <button id="servings-up" class="button button-secondary button-small" type="button" aria-label="More servings">+</button>
+          </dd>
+        </div>
+        <div><dt>Prep</dt><dd id="fact-prep"></dd></div>
+        <div><dt>Cook</dt><dd id="fact-cook"></dd></div>
+        <div><dt>Total</dt><dd id="fact-total"></dd></div>
+      </dl>
+
+      <div class="recipe-layout">
+        <section class="card" aria-labelledby="ingredients-heading">
+          <h2 id="ingredients-heading">Ingredients</h2>
+          <p id="scale-note" class="hint" hidden>
+            Scaled from <span id="base-servings"></span>.
+            <button id="servings-reset" class="link-button" type="button">Back to original</button>
+          </p>
+          <p id="match-summary" class="match-summary" role="status" hidden></p>
+          <ul id="ingredient-list" class="ingredient-list"></ul>
+          <div id="grocery-actions" class="actions" hidden>
+            <button id="grocery-button" class="button button-secondary" type="button" hidden>Add missing to grocery list</button>
+          </div>
+          <p id="grocery-result" class="alert alert-info" role="status" hidden></p>
+        </section>
+
+        <section class="card" aria-labelledby="steps-heading">
+          <h2 id="steps-heading">Instructions</h2>
+          <ol id="step-list" class="steps" role="list"></ol>
+        </section>
+      </div>
+
+      <section id="flavor-card" class="card" aria-labelledby="flavor-heading" hidden>
+        <h2 id="flavor-heading">Flavor</h2>
+        <ul id="flavor-bars" class="flavor-bars"></ul>
+        <p id="flavor-unknown" class="hint" hidden></p>
+      </section>
+
+      <section class="card" aria-labelledby="cooked-heading">
+        <h2 id="cooked-heading">I cooked this</h2>
+        <form id="cooked-form" class="form-stack" novalidate>
+          <div id="cooked-errors" class="alert alert-error" role="alert" tabindex="-1" hidden></div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="cooked-on">Date</label>
+              <input type="date" id="cooked-on" name="cooked_on" required>
+            </div>
+            <div class="field">
+              <label for="cooked-rating">Rating <span class="hint">(optional)</span></label>
+              <select id="cooked-rating" name="rating">
+                <option value="">Not rated</option>
+                <option value="5">5, loved it</option>
+                <option value="4">4, really good</option>
+                <option value="3">3, fine</option>
+                <option value="2">2, not great</option>
+                <option value="1">1, wouldn't make again</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cooked-leftovers">Servings left over <span class="hint">(optional)</span></label>
+              <input type="number" id="cooked-leftovers" name="leftover_servings" min="1" max="50" step="1" aria-describedby="leftovers-hint">
+            </div>
+          </div>
+          <p id="leftovers-hint" class="hint">Leftovers go in your inventory, in the fridge, good for 4 days from the day you cooked.</p>
+          <div class="field">
+            <label for="cooked-notes">Notes <span class="hint">(optional)</span></label>
+            <textarea id="cooked-notes" name="notes" rows="2" maxlength="2000" placeholder="Less salt next time, doubled the garlic..."></textarea>
+          </div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="cooked-update-inventory" name="update_inventory" checked>
+            <span>Take what I used out of my inventory (<span id="cooked-servings"></span>)</span>
+          </label>
+          <div class="actions">
+            <button type="submit" id="cooked-button" class="button button-primary">Save</button>
+          </div>
+        </form>
+        <div id="cooked-result" class="alert alert-info" role="status" hidden></div>
+
+        <h3 class="history-heading">Your history with this recipe</h3>
+        <p id="recipe-history-empty" class="hint">You haven't logged this one yet.</p>
+        <ul id="recipe-history" class="history-list" hidden></ul>
+      </section>
+
+      <div class="actions">
+        <button id="photo-button" class="button button-secondary" type="button">Add a photo</button>
+        <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp,image/heic" hidden>
+        <button id="photo-remove" class="button button-secondary" type="button" hidden>Remove photo</button>
+        <a id="edit-link" class="button button-secondary" href="#">Edit recipe</a>
+        <button id="delete-button" class="button button-danger" type="button">Delete recipe</button>
+      </div>
+      <p id="photo-error" class="alert alert-error" role="alert" hidden></p>
+      <p id="delete-error" class="alert alert-error" role="alert" hidden></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Mise, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/recipe-detail.js?v=22"></script>
+</body>
+</html>

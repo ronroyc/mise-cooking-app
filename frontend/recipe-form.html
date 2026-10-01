@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Recipe · Mise</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Mise</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="back-link"><a id="back-link" href="/recipes.html">Back to all recipes</a></p>
+    <h1 id="form-heading">New recipe</h1>
+
+    <p id="page-status" role="status" hidden></p>
+
+    <section id="import-card" class="card" aria-labelledby="import-heading" hidden>
+      <h2 id="import-heading">Import from a website</h2>
+      <form id="import-form" class="import-form" novalidate>
+        <div class="field">
+          <label for="import-url">Recipe page address</label>
+          <input type="url" id="import-url" name="url" placeholder="https://" maxlength="500" autocomplete="off">
+        </div>
+        <button type="submit" id="import-button" class="button button-secondary">Import</button>
+      </form>
+      <div id="import-error" class="alert alert-error" role="alert" hidden></div>
+      <div id="import-result" class="alert alert-info" role="status" hidden></div>
+      <label id="import-photo-row" class="checkbox-row" hidden>
+        <input type="checkbox" id="import-photo" checked>
+        <span>Save the photo from the site with the recipe</span>
+      </label>
+      <details class="import-help">
+        <summary>Some sites block this</summary>
+        <p>
+          Big sites like Allrecipes and Serious Eats don't let apps read their pages. For those, drag this
+          button to Safari's Favorites bar:
+          <a id="bookmarklet" class="button button-secondary button-small" href="#">Save to Mise</a>
+        </p>
+        <p>Then open a recipe in Safari and click it. Mise opens with the recipe filled in, ready to check and save.</p>
+        <p class="hint">
+          If clicking it does nothing: in Safari, open Settings, Advanced, and turn on "Show features for
+          web developers". Then in the Develop menu, turn on "Allow JavaScript from Smart Search Field".
+        </p>
+      </details>
+    </section>
+
+    <form id="recipe-form" class="form-stack" novalidate>
+      <div id="form-errors" class="alert alert-error" role="alert" tabindex="-1" hidden></div>
+
+      <div class="field">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required maxlength="200">
+      </div>
+
+      <div class="field">
+        <label for="description">Description <span class="hint">(optional)</span></label>
+        <input type="text" id="description" name="description" maxlength="1000">
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="cuisine">Cuisine <span class="hint">(optional)</span></label>
+          <input type="text" id="cuisine" name="cuisine" maxlength="50" list="cuisine-options">
+          <datalist id="cuisine-options"></datalist>
+        </div>
+        <div class="field">
+          <label for="servings">Servings</label>
+          <input type="number" id="servings" name="servings" required min="1" max="100" step="1" value="2">
+        </div>
+        <div class="field">
+          <label for="prep_time">Prep time (min)</label>
+          <input type="number" id="prep_time" name="prep_time" required min="0" max="1440" step="1" value="10">
+        </div>
+        <div class="field">
+          <label for="cook_time">Cook time (min)</label>
+          <input type="number" id="cook_time" name="cook_time" required min="0" max="1440" step="1" value="20">
+        </div>
+      </div>
+
+      <fieldset class="card">
+        <legend class="field-label">Ingredients</legend>
+        <p class="hint">Leave quantity empty for things like "salt, to taste".</p>
+        <div id="ingredient-rows"></div>
+        <div class="actions">
+          <button type="button" id="add-ingredient" class="button button-secondary">Add ingredient</button>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="instructions">Instructions</label>
+        <span id="instructions-hint" class="hint">One step per line.</span>
+        <textarea id="instructions" name="instructions" required maxlength="10000" aria-describedby="instructions-hint"></textarea>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="save-button" class="button button-primary">Save recipe</button>
+        <a id="cancel-link" class="button button-secondary" href="/recipes.html">Cancel</a>
+      </div>
+    </form>
+
+    <datalist id="unit-options">
+      <option value="g"></option><option value="kg"></option><option value="oz"></option><option value="lb"></option>
+      <option value="ml"></option><option value="l"></option><option value="tsp"></option><option value="tbsp"></option>
+      <option value="cup"></option><option value="each"></option><option value="clove"></option><option value="can"></option>
+    </datalist>
+
+    <template id="ingredient-row-template">
+      <div class="ingredient-row">
+        <div class="field field-name">
+          <label>Ingredient</label>
+          <input type="text" data-field="name" maxlength="100" required>
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" data-field="quantity" min="0" step="any">
+        </div>
+        <div class="field">
+          <label>Unit</label>
+          <input type="text" data-field="unit" maxlength="20" list="unit-options">
+        </div>
+        <div class="field field-note">
+          <label>Note</label>
+          <input type="text" data-field="preparation_note" maxlength="200" placeholder="e.g. minced">
+        </div>
+        <div class="field field-check">
+          <input type="checkbox" data-field="optional">
+          <label>Optional</label>
+        </div>
+        <button type="button" class="link-button is-danger remove-ingredient">Remove</button>
+      </div>
+    </template>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Mise, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/recipe-form.js?v=22"></script>
+</body>
+</html>

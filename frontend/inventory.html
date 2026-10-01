@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory · Mise</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Mise</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html" aria-current="page">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Inventory</h1>
+    <p class="page-intro">What's in your pantry, fridge, and freezer right now.</p>
+
+    <section class="card" aria-labelledby="item-form-heading">
+      <h2 id="item-form-heading">Add an item</h2>
+      <form id="item-form" class="form-stack" novalidate>
+        <div id="form-errors" class="alert alert-error" role="alert" tabindex="-1" hidden></div>
+        <p id="form-notice" class="alert alert-info" role="status" hidden></p>
+
+        <div class="inventory-form-grid">
+          <div class="field field-wide">
+            <label for="item-name">Item</label>
+            <input type="text" id="item-name" name="name" required maxlength="100" list="ingredient-options" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="item-quantity">Amount <span class="hint">(optional)</span></label>
+            <input type="number" id="item-quantity" name="quantity" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="item-unit">Unit <span class="hint">(optional)</span></label>
+            <input type="text" id="item-unit" name="unit" maxlength="20" list="unit-options">
+          </div>
+          <div class="field">
+            <label for="item-location">Kept in</label>
+            <select id="item-location" name="location">
+              <option value="pantry">Pantry</option>
+              <option value="fridge">Fridge</option>
+              <option value="freezer">Freezer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="item-expiration">Expires <span class="hint">(optional)</span></label>
+            <input type="date" id="item-expiration" name="expiration_date">
+          </div>
+        </div>
+        <div id="ai-panel" class="ai-panel" aria-live="polite" hidden></div>
+
+        <p class="hint">Leave the amount empty for things you just have "some" of, like salt or spices.</p>
+
+        <div class="actions">
+          <button type="submit" id="save-button" class="button button-primary">Add item</button>
+          <button type="button" id="cancel-edit" class="button button-secondary" hidden>Cancel edit</button>
+        </div>
+      </form>
+    </section>
+
+    <form id="filters" class="filters inventory-filters" role="search">
+      <div class="field field-search">
+        <label for="search">Search</label>
+        <input type="search" id="search" name="search" placeholder="Item name" maxlength="100">
+      </div>
+      <div class="field field-select">
+        <label for="location-filter">Kept in</label>
+        <select id="location-filter" name="location">
+          <option value="">Everywhere</option>
+          <option value="pantry">Pantry</option>
+          <option value="fridge">Fridge</option>
+          <option value="freezer">Freezer</option>
+        </select>
+      </div>
+    </form>
+
+    <p id="summary" class="result-count" role="status">Loading inventory...</p>
+    <div id="item-list"></div>
+
+    <datalist id="ingredient-options"></datalist>
+    <datalist id="unit-options">
+      <option value="each"></option>
+      <option value="cup"></option>
+      <option value="tbsp"></option>
+      <option value="tsp"></option>
+      <option value="lb"></option>
+      <option value="oz"></option>
+      <option value="g"></option>
+      <option value="kg"></option>
+      <option value="ml"></option>
+      <option value="l"></option>
+      <option value="can"></option>
+      <option value="clove"></option>
+    </datalist>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Mise, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/inventory.js?v=22"></script>
+</body>
+</html>

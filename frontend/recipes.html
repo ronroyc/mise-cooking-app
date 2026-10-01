@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recipes · Mise</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Mise</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html" aria-current="page">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Recipes</h1>
+    <p class="page-intro">Browse, search, and pin your saved recipes.</p>
+
+    <div class="toolbar">
+      <form id="filters" class="filters" role="search">
+        <div class="field field-search">
+          <label for="search">Search</label>
+          <input type="search" id="search" name="search" placeholder="Title, description, or ingredient" maxlength="100">
+        </div>
+        <div class="field field-select">
+          <label for="cuisine">Cuisine</label>
+          <select id="cuisine" name="cuisine">
+            <option value="">All cuisines</option>
+          </select>
+        </div>
+        <div class="field field-select">
+          <label for="max-time">Ready in</label>
+          <select id="max-time" name="max_total_time">
+            <option value="">Any time</option>
+            <option value="15">15 min or less</option>
+            <option value="30">30 min or less</option>
+            <option value="45">45 min or less</option>
+            <option value="60">1 hr or less</option>
+          </select>
+        </div>
+        <div class="field field-select">
+          <label for="show">Show</label>
+          <select id="show" name="show">
+            <option value="">All recipes</option>
+            <option value="pinned">Pinned</option>
+          </select>
+        </div>
+        <div class="field field-select">
+          <label for="sort">Sort</label>
+          <select id="sort" name="sort">
+            <option value="title">A to Z</option>
+            <option value="match">Best match</option>
+          </select>
+        </div>
+      </form>
+      <a class="button button-primary" href="/recipe-form.html">New recipe</a>
+    </div>
+
+    <div class="list-header">
+      <p id="result-count" class="result-count" role="status">Loading recipes...</p>
+      <div class="color-key">
+        <span class="color-key-label">Corner color:</span>
+        <ul>
+          <li><span class="corner-swatch corner-green"></span>You have everything</li>
+          <li><span class="corner-swatch corner-yellow"></span>At least half</li>
+          <li><span class="corner-swatch corner-red"></span>Less than half</li>
+        </ul>
+      </div>
+    </div>
+    <ul id="recipe-list" class="recipe-grid"></ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Mise, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/recipes.js?v=22"></script>
+</body>
+</html>
