@@ -1,0 +1,27 @@
+{
+  "_note": "Demo kitchen inventory. expires_in_days is relative to the day the seed runs, so the demo always has something expiring soon. Every name matches an ingredient used by the seed recipes.",
+  "items": [
+    {"name": "rice", "quantity": 6, "unit": "cup", "location": "pantry"},
+    {"name": "soy sauce", "quantity": 1, "unit": "cup", "location": "pantry"},
+    {"name": "vegetable oil", "quantity": 2, "unit": "cup", "location": "pantry"},
+    {"name": "olive oil", "quantity": 1, "unit": "cup", "location": "pantry"},
+    {"name": "salt", "location": "pantry"},
+    {"name": "black pepper", "location": "pantry"},
+    {"name": "sugar", "quantity": 2, "unit": "cup", "location": "pantry"},
+    {"name": "ground cumin", "location": "pantry"},
+    {"name": "spaghetti", "quantity": 1, "unit": "lb", "location": "pantry"},
+    {"name": "crushed tomatoes", "quantity": 2, "unit": "can", "location": "pantry", "expires_in_days": 400},
+    {"name": "garlic", "quantity": 8, "unit": "clove", "location": "pantry", "expires_in_days": 14},
+    {"name": "onion", "quantity": 3, "unit": "each", "location": "pantry", "expires_in_days": 20},
+    {"name": "egg", "quantity": 10, "unit": "each", "location": "fridge", "expires_in_days": 12},
+    {"name": "butter", "quantity": 8, "unit": "tbsp", "location": "fridge", "expires_in_days": 30},
+    {"name": "parmesan", "quantity": 4, "unit": "oz", "location": "fridge", "expires_in_days": 25},
+    {"name": "heavy cream", "quantity": 1, "unit": "cup", "location": "fridge", "expires_in_days": 2},
+    {"name": "chicken thigh", "quantity": 1.5, "unit": "lb", "location": "fridge", "expires_in_days": 1},
+    {"name": "green onion", "quantity": 4, "unit": "each", "location": "fridge", "expires_in_days": 3},
+    {"name": "ginger", "quantity": 1, "unit": "oz", "location": "fridge", "expires_in_days": 10},
+    {"name": "spinach", "quantity": 5, "unit": "oz", "location": "fridge", "expires_in_days": -1},
+    {"name": "lemon", "quantity": 2, "unit": "each", "location": "fridge", "expires_in_days": 9},
+    {"name": "frozen peas", "quantity": 2, "unit": "cup", "location": "freezer", "expires_in_days": 120}
+  ]
+}

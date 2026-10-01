@@ -1,0 +1,11 @@
+# Backend dependencies. Versions are pinned so the app installs the same way everywhere.
+fastapi==0.128.8
+uvicorn[standard]==0.39.0
+sqlalchemy==2.0.54
+pydantic==2.13.5
+python-dotenv==1.2.1
+anthropic==0.125.0  # AI ingredient recognition. 0.x because 1.x needs Python 3.10+
+
+# Testing
+pytest==8.4.2
+httpx==0.28.1

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy · Slice'd</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Slice'd</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="prose" id="main">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: September 28, 2026</p>
+
+    <p>Slice'd is designed to collect as little as possible. This page explains exactly what it stores and where that data goes.</p>
+
+    <h2>What Slice'd stores</h2>
+    <ul>
+      <li>Recipes you save or edit</li>
+      <li>Your ingredient inventory, including quantities and expiration dates</li>
+      <li>Your grocery list</li>
+      <li>Your cooking history, ratings, and notes</li>
+      <li>Which recipes you pinned</li>
+      <li>Photos you add to recipes</li>
+    </ul>
+    <p>All of this is stored in a single database file on the computer that runs Slice'd, except photos, which are saved as image files in the <code>data/photos</code> folder next to it. Photos are never sent anywhere, including to the AI features below. There are no accounts, so Slice'd never asks for your name, email address, or password.</p>
+
+    <h2>Importing recipes</h2>
+    <p>When you import a recipe by its address, Slice'd downloads that page (and the recipe's photo, if you keep it) from the recipe's website, the same way your browser would. That site sees a visit from your computer. The "Save to Slice'd" Safari button reads the recipe from the page you already have open and sends it only to Slice'd on your computer.</p>
+
+    <h2>What Slice'd does not do</h2>
+    <ul>
+      <li>It does not use cookies or analytics.</li>
+      <li>It does not track you across websites.</li>
+      <li>It does not sell or share your data.</li>
+    </ul>
+
+    <h2>AI features</h2>
+    <p>Slice'd uses Anthropic's API for its AI features. They only run if an Anthropic API key has been added to the app's settings file. Without one, nothing is ever sent.</p>
+    <ul>
+      <li><strong>Ingredient recognition.</strong> When you type an item on the Inventory page that Slice'd doesn't already know, Slice'd sends the name you typed and the list of ingredient names Slice'd already knows to Anthropic, so it can identify the item and suggest a category, where to keep it, and how long it lasts. Names Slice'd already knows, including plurals and common other names for them ("eggs" for "egg"), are never sent for lookup. Amounts, dates, and recipes are not sent.</li>
+      <li><strong>Substitution assistant.</strong> The swaps shown under a missing ingredient come from a list built into Slice'd, and nothing is sent for them. Only when you click "Ask AI for ideas" does Slice'd send the recipe (its title, servings, ingredients with amounts, and steps), the ingredient you're missing, and the names of the unexpired items in your inventory to Anthropic. Inventory amounts and dates, your cooking history, and your photos are not sent.</li>
+    </ul>
+    <p>Anthropic handles that data under its own privacy policy.</p>
+
+    <h2>Deleting your data</h2>
+    <p>You can delete individual recipes, inventory items, grocery items, and history entries in the app. Removing a recipe's photo, or deleting the recipe, deletes the photo file too. To remove everything, delete the <code>data/sliced.db</code> file and the <code>data/photos</code> folder.</p>
+
+    <h2>Changes</h2>
+    <p>This policy will be updated if Slice'd starts handling data differently. The date at the top of this page shows when it last changed.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Slice'd, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html" aria-current="page">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

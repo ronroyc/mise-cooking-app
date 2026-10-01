@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slice'd: What should I cook today?</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Slice'd</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="home">
+    <p id="backend-alert" class="alert alert-error" role="alert" hidden></p>
+
+    <div class="hero">
+      <h1>What should you cook tonight?</h1>
+      <p id="dash-intro" class="page-intro">Recipes ranked by what's already in your kitchen.</p>
+    </div>
+
+    <dl class="figures">
+      <div>
+        <dt class="label">Ready to cook</dt>
+        <dd><a id="stat-ready" href="/recipes.html?sort=match">...</a></dd>
+      </div>
+      <div>
+        <dt class="label">In your kitchen</dt>
+        <dd><a id="stat-kitchen" href="/inventory.html">...</a></dd>
+      </div>
+      <div>
+        <dt class="label">Use soon</dt>
+        <dd><a id="stat-soon" href="/inventory.html">...</a></dd>
+      </div>
+      <div>
+        <dt class="label">To buy</dt>
+        <dd><a id="stat-grocery" href="/grocery.html">...</a></dd>
+      </div>
+    </dl>
+
+    <section class="home-section" aria-labelledby="recs-heading">
+      <div class="section-head">
+        <h2 id="recs-heading">Tonight's picks</h2>
+        <a class="label-link" href="/recipes.html?sort=match">All recipes by match</a>
+      </div>
+      <p id="recs-status" class="hint" role="status">Ranking your recipes...</p>
+      <ol id="picks" class="picks" hidden></ol>
+      <ol id="recs-list" class="rec-index" hidden></ol>
+      <p class="hint score-note">
+        Ranked by points: up to 70 for the ingredients you have, up to 20 for using food that
+        expires in the next 3 days, and up to 10 for fitting your taste (learned from the meals you
+        rate 4 or 5). Salt, pepper, and water count as on hand.
+      </p>
+    </section>
+
+    <div class="home-columns">
+      <section class="home-section" aria-labelledby="use-soon-heading">
+        <div class="section-head">
+          <h2 id="use-soon-heading">Use soon</h2>
+          <a class="label-link" href="/inventory.html">Inventory</a>
+        </div>
+        <p id="use-soon-status" class="hint" role="status">Checking your inventory...</p>
+        <ul id="use-soon-list" class="ruled-list" hidden></ul>
+      </section>
+
+      <section class="home-section" aria-labelledby="grocery-heading">
+        <div class="section-head">
+          <h2 id="grocery-heading">To buy</h2>
+          <a class="label-link" href="/grocery.html">Grocery list</a>
+        </div>
+        <p id="grocery-status" class="hint" role="status">Loading your list...</p>
+        <ul id="grocery-list" class="ruled-list" hidden></ul>
+        <p id="grocery-more" class="hint" hidden></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Slice'd, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/dashboard.js?v=22"></script>
+</body>
+</html>

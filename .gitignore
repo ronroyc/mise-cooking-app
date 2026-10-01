@@ -1,0 +1,23 @@
+# Secrets: never commit these
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local database files (recreated automatically)
+data/*.db
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Recipe photos (personal, stay on this Mac)
+data/photos/
+
+# Private session notes
+HANDOFF.md
+INTERVIEW_NOTES.md

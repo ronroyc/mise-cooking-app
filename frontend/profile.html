@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile · Slice'd</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="logo" href="/"><img src="/favicon.svg" alt="">Slice'd</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/recipes.html">Recipes</a></li>
+          <li><a href="/inventory.html">Inventory</a></li>
+          <li><a href="/grocery.html">Groceries</a></li>
+          <li><a href="/meal-prep.html">Meal prep</a></li>
+          <li><a href="/history.html">History</a></li>
+          <li><a href="/profile.html" aria-current="page">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Your profile</h1>
+    <p class="page-intro">What Slice'd has learned from what you cook, rate, and pin. Nothing here comes from a questionnaire.</p>
+
+    <p id="page-status" role="status">Loading your profile...</p>
+
+    <div id="profile" hidden>
+      <dl class="figures">
+        <div><dt class="label">Meals cooked</dt><dd id="stat-meals"></dd></div>
+        <div><dt class="label">Recipes pinned</dt><dd id="stat-pinned"></dd></div>
+        <div><dt class="label">Average rating</dt><dd id="stat-rating"></dd></div>
+        <div><dt class="label">Usual cook time</dt><dd id="stat-minutes"></dd></div>
+      </dl>
+
+      <div class="profile-grid">
+        <section class="card" aria-labelledby="flavor-heading">
+          <h2 id="flavor-heading">Your flavor profile</h2>
+          <p id="flavor-missing" class="hint" hidden></p>
+          <div id="flavor-body" hidden>
+            <div id="radar" class="radar"></div>
+            <h3 class="flavor-dna-heading">Your flavor DNA</h3>
+            <ul id="flavor-bars" class="flavor-bars"></ul>
+            <p id="flavor-basis" class="hint"></p>
+            <p class="hint">
+              Each recipe's flavor comes from its ingredients, using a table built into Slice'd
+              (garlic is garlicky, soy sauce is salty and savory). Amounts aren't counted yet.
+            </p>
+          </div>
+        </section>
+
+        <div class="profile-side">
+          <section class="card" aria-labelledby="knows-heading">
+            <h2 id="knows-heading">Slice'd knows...</h2>
+            <p id="taste-note" class="taste-note"></p>
+            <ul id="observations" class="observations"></ul>
+            <p id="observations-empty" class="hint" hidden></p>
+          </section>
+
+          <section class="card" aria-labelledby="ingredients-heading">
+            <h2 id="ingredients-heading">You cook with</h2>
+            <ol id="top-ingredients" class="top-ingredients"></ol>
+            <p id="ingredients-note" class="hint"></p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p>Slice'd, a personal cooking project.</p>
+      <nav aria-label="Legal">
+        <ul>
+          <li><a href="/terms.html">Terms</a></li>
+          <li><a href="/privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/common.js?v=22"></script>
+  <script src="/js/profile.js?v=22"></script>
+</body>
+</html>
