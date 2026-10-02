@@ -169,8 +169,9 @@ Browser features it relies on:
 
 ### Fonts
 
-- **Newsreader** for headings (SIL Open Font License, see `frontend/fonts/OFL.txt`), stored
-  inside Mise so no page contacts Google. Body text uses the Mac's system font.
+- **Barlow Condensed** for headings (like kitchen signage), **IBM Plex Mono** for ticket
+  details and numbers, and **IBM Plex Sans** for reading. All SIL Open Font License (see
+  `frontend/fonts/OFL-*.txt`), stored inside Mise so no page contacts a font service.
 
 ---
 
@@ -315,10 +316,12 @@ I have?" has one answer. Typing an unfamiliar name can ask the AI for a suggesti
 
 ### 4.2 Recipes, the grid, and corners
 `recipes.js` loads `/api/recommendations` (every recipe with its match and score), sorts A
-to Z in the browser unless "Best match" is chosen, and builds cards with `recipeCover()`
-from `common.js` (photo, or a colored cover with the title's first letter). The corner color
-comes from `match_color()`: green (everything), yellow (at least half), red (less than half).
-The same fact is written in words on the card, so color is never the only signal.
+to Z in the browser unless "Best match" is chosen, and builds each recipe as an order ticket
+with helpers from `common.js`: `recipeCover()` (the photo, or nothing, so a recipe without a
+photo is a plain ticket), `colorTicket()` (the colored corner), and `recipeStamp()` (READY,
+or NEEDS 3). The color comes from `match_color()`: green (everything), yellow (at least
+half), red (less than half). The stamp says the same in words, so color is never the only
+signal.
 
 ### 4.3 A recipe page
 `recipe-detail.js` loads the recipe, then `/match` for the ingredient labels and swaps,
@@ -431,11 +434,14 @@ target, with a tooltip and a screen-reader label. The same numbers appear as bar
 underneath, so the chart is never the only way to read them.
 
 ### 5.4 The design system (`css/style.css`)
-- **Tokens** in `:root`: colors (paper, ink, paprika accent, the corner colors, cover colors),
-  the spacing scale (`--space-1` to `--space-9`), radius, page width. Rules use tokens, never
-  one-off values, so the look stays consistent.
-- **The cookbook look:** warm paper background, a heavy rule under the header and above each
-  section, serif headings (Newsreader), small uppercase labels, thin rules instead of boxes.
+- **Tokens** in `:root`: colors (steel, ticket white, ink, tomato, the stamp colors, the
+  chalkboard), the three font families, the spacing scale (`--space-1` to `--space-9`), and
+  page width. Rules use tokens, never one-off values, so the look stays consistent.
+- **The kitchen-line look** (from the name, *mise en place*): sections and recipes are white
+  order tickets with a dashed tear edge and a paper edge; recipes hang on a rail and carry a
+  colored corner and a rubber stamp; short lists are chalkboards; numbers sit on a board with
+  heavy black lines; headings are condensed uppercase signage; ticket details are mono;
+  corners are square.
 - **Design rules** (from `DEVELOPMENT_PLAN.md`, several checked by tests): no gradients, no
   emoji, no italics, no animations or transitions, no em dashes, no labels above headlines,
   WCAG AA contrast.

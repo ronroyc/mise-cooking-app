@@ -28,8 +28,8 @@ function showDate() {
 }
 
 // ---------- Recommendations ----------
-// The top 3 are "Tonight's picks" with covers; the next 5 are a numbered index,
-// like the contents page of a cookbook.
+// The top 3 are "Tonight's picks", order tickets hanging on the rail; the next 5 are a
+// numbered list.
 
 const PICKS = 3;
 const INDEX_LENGTH = 5;
@@ -83,34 +83,50 @@ function recipeLink(rec) {
   return link;
 }
 
+// One order ticket: number and time, the title, a few ticket lines, the colored corner,
+// and the stamp. Only the lines that apply are printed.
 function renderPick(rec, n) {
   const li = document.createElement("li");
   li.className = "pick";
-  li.append(recipeCover(rec.recipe, rec));
+  colorTicket(li, rec);
+  const cover = recipeCover(rec.recipe);
+  if (cover) li.append(cover);
+
+  const body = document.createElement("div");
+  body.className = "pick-body";
+  const head = document.createElement("p");
+  head.className = "ticket-head";
+  const no = document.createElement("span");
+  no.textContent = `#${number(n)} · ${rec.recipe.cuisine || "Recipe"}`;
+  const time = document.createElement("span");
+  time.textContent = formatMinutes(rec.recipe.total_time);
+  head.append(no, time);
 
   const heading = document.createElement("h3");
-  const numeral = document.createElement("span");
-  numeral.className = "pick-number";
-  numeral.textContent = number(n);
-  heading.append(numeral, recipeLink(rec));
+  heading.append(recipeLink(rec));
 
-  const meta = document.createElement("p");
-  meta.className = "label";
-  meta.textContent = [rec.recipe.cuisine, formatMinutes(rec.recipe.total_time)].filter(Boolean).join(" · ");
+  const lines = [["On hand", `${rec.have_count} of ${rec.required_count}`], ["Points", rec.score]];
+  if (rec.use_soon.length) lines.push(["Use soon", rec.use_soon.join(", ")]);
+  if (rec.taste_points >= 3) lines.push(["Taste", "Fits what you like"]);
+  if (rec.short.length) lines.push(["Not enough", rec.short.join(", "), true]);
+  if (rec.missing.length) lines.push(["Missing", rec.missing.join(", "), true]);
+  const list = document.createElement("ul");
+  list.className = "ticket-lines";
+  list.replaceChildren(
+    ...lines.map(([label, value, isMissing]) => {
+      const item = document.createElement("li");
+      if (isMissing) item.className = "line-missing";
+      const left = document.createElement("span");
+      left.textContent = label;
+      const right = document.createElement("span");
+      right.textContent = value;
+      item.append(left, right);
+      return item;
+    })
+  );
 
-  const have = document.createElement("p");
-  have.className = `pick-have match-${rec.color}`;
-  have.textContent = `${haveText(rec)} · ${plural(rec.score, "point", "points")}`;
-
-  li.append(heading, meta, have);
-  // The first reason repeats the "have" line, so only the ones after it are shown.
-  const extra = rec.reasons.slice(1, 3);
-  if (extra.length) {
-    const reasons = document.createElement("p");
-    reasons.className = "hint";
-    reasons.textContent = extra.join(" ");
-    li.append(reasons);
-  }
+  body.append(head, heading, list);
+  li.append(body, recipeStamp(rec));
   return li;
 }
 

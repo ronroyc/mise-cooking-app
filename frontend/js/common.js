@@ -130,51 +130,41 @@ function showCurrentMenuItem() {
 }
 showCurrentMenuItem();
 
-// ---------- Recipe covers ----------
+// ---------- Recipe tickets: photo, colored corner, and stamp ----------
 
-const CORNER_LABELS = {
-  green: "You have everything",
-  yellow: "You have at least half",
-  red: "You have less than half",
-};
-
-// The top of a recipe card: the recipe's photo, or a plain color (picked by recipe id,
-// so it never changes) with the title's first letter set large, like a book cover.
-// With `match`, the corner shows how much of the recipe is in the kitchen.
-function recipeCover(recipe, match, onPhotoLoad) {
+// The photo at the top of a recipe ticket, or null when there's no photo (the ticket is
+// then just paper). A photo file that fails to load is removed instead of showing a
+// broken-image icon.
+function recipeCover(recipe, onPhotoLoad) {
+  if (!recipe.photo_url) return null;
   const cover = document.createElement("div");
-  cover.className = `recipe-cover cover-${(recipe.id % 6) + 1}`;
-  const plain = () => {
-    cover.classList.add("is-plain");
-    const initial = document.createElement("span");
-    initial.className = "cover-initial";
-    initial.setAttribute("aria-hidden", "true");
-    initial.textContent = recipe.title.trim().charAt(0).toUpperCase();
-    cover.prepend(initial);
-  };
-  if (recipe.photo_url) {
-    const img = document.createElement("img");
-    img.src = recipe.photo_url;
-    img.alt = "";
-    img.loading = "lazy";
-    if (onPhotoLoad) img.addEventListener("load", onPhotoLoad);
-    // A missing photo file shows the plain cover, not a broken-image icon.
-    img.addEventListener("error", () => {
-      img.remove();
-      plain();
-      if (onPhotoLoad) onPhotoLoad();
-    });
-    cover.append(img);
-  } else {
-    plain();
-  }
-  if (match) {
-    const corner = document.createElement("span");
-    corner.className = `corner corner-${match.color}`;
-    corner.title = CORNER_LABELS[match.color];
-    cover.append(corner);
-  }
+  cover.className = "recipe-cover";
+  const img = document.createElement("img");
+  img.src = recipe.photo_url;
+  img.alt = "";
+  img.loading = "lazy";
+  if (onPhotoLoad) img.addEventListener("load", onPhotoLoad);
+  img.addEventListener("error", () => {
+    cover.remove();
+    if (onPhotoLoad) onPhotoLoad();
+  });
+  cover.append(img);
   return cover;
+}
+
+// Turns a ticket's element into a colored-corner ticket: green, yellow (mustard), or red,
+// by how much of the recipe is in the kitchen (matching.match_color on the server).
+function colorTicket(element, match) {
+  element.classList.add(`color-${match.color}`);
+}
+
+// The rubber stamp: READY, or NEEDS 3 (required ingredients not on hand), in the corner's
+// color. It says in words what the corner says in color.
+function recipeStamp(match) {
+  const stamp = document.createElement("span");
+  stamp.className = `stamp stamp-${match.color}`;
+  stamp.textContent = match.ready ? "Ready" : `Needs ${match.required_count - match.have_count}`;
+  return stamp;
 }
 
 // ---------- Pins ----------

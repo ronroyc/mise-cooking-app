@@ -211,3 +211,23 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
   `workflow` permission, which GitHub requires for automation files.
 - The tests ran on GitHub's servers: all 474 passed. README got the clone address and the
   green tests badge.
+
+---
+
+## Oct 2: a design with a concept
+
+- **Why:** the cookbook look (cream paper, a book serif, a terracotta accent) read as
+  generic. It's the default style AI tools produce, so the app looked machine-made even
+  though it was tidy. A new palette on the same layout wouldn't fix that; a concept would.
+- **Directions compared:** three mockups of the same page with real data: a restaurant
+  kitchen line, grocery store signage, and a Swiss poster. **Chosen:** the kitchen line,
+  because it comes from the app's own name (*mise en place*), with plain wording everywhere
+  rather than kitchen slang.
+- **What:** recipes are order tickets hanging on a rail, each with a colored corner and a
+  READY / NEEDS stamp; short lists (use soon, to buy, prep together) are chalkboards;
+  numbers sit on a black-lined board; steel gray, ticket white, black, and tomato red;
+  Barlow Condensed, IBM Plex Mono, and IBM Plex Sans, served locally; square corners.
+  Recipes without a photo are plain tickets instead of fake colored covers.
+- **Fixes along the way:** the colored corners briefly disappeared mid-redesign (styles
+  changed before the scripts); ticket headers ran under the corner; clips floated between
+  grid rows. The tomato red and green were checked for contrast on the steel background.
