@@ -72,8 +72,13 @@ uploads, with a plain colored cover otherwise; and this order.
    plus "prep together" steps (`services/meal_prep.py`).
 
 After the build order:
-- **Redesign** in a cookbook style: paper and ink colors, Newsreader headings served
-  locally, rules instead of boxes, figures, numbered picks and steps.
+- **Redesign**, twice. A first pass in a cookbook style (cream paper, a book serif, a
+  terracotta accent) read as generic: it's the look AI tools produce by default. The second
+  pass started from a concept instead of a palette: a restaurant kitchen
+  line. Recipes are order tickets on a rail with a colored corner and a READY / NEEDS stamp,
+  short lists are chalkboards, numbers sit on a black-lined board; steel gray, ticket white,
+  black, and tomato red; Barlow Condensed headings with IBM Plex Mono and Sans, served
+  locally. Recipes without a photo are plain tickets rather than fake colored covers.
 - **Taste-based recommendations** (`services/taste.py`): the score became 70 (ingredients)
   + 20 (use soon) + 10 (taste), with taste learned from meals rated 4 or 5.
 - **Ready to share:** a demo database builder, new screenshots, the README, a GitHub Actions
@@ -234,7 +239,7 @@ After the build order:
 | History keeps a copy of the recipe title | Deleting a recipe shouldn't erase what you cooked |
 | Bought items get a location from their category | Most chicken belongs in the fridge; the Inventory page can move it |
 | No UI framework or component library, even for the redesign | Plain HTML/CSS keeps the app small and dependency-free; the component libraries offered target React/Tailwind |
-| Fonts served by Slice'd itself (Newsreader for headings, the system font for text) | Loading fonts from Google would contact a third party, which the privacy page says Slice'd doesn't do |
+| Fonts served by Slice'd itself (Barlow Condensed for headings, IBM Plex Mono and Sans for the rest) | Loading fonts from Google would contact a third party, which the privacy page says Slice'd doesn't do |
 | Status shown as text plus color everywhere | Color alone fails color-blind users; the words carry the meaning |
 | Frontend files served with `Cache-Control: no-cache` | Browser always checks for a newer file (cheap 304 if unchanged), so pages never mix old and new JS |
 

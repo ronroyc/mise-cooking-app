@@ -2,52 +2,58 @@
    Design rules live in DEVELOPMENT_PLAN.md. Short version: flat colors, no gradients,
    no animations, no italics, and every margin/padding/gap uses the --space-* scale.
 
-   The look is a cookbook: warm paper, dark ink, a book serif (Newsreader) for headings,
-   thin rules instead of boxes where possible, and room to breathe. */
+   The look is a restaurant kitchen line:
+   steel-gray background, recipes as white order tickets with a dashed tear edge,
+   rubber stamps for what's ready, chalkboards for short lists, and a board of figures.
+   Type: Barlow Condensed for headings (kitchen signage), IBM Plex Mono for ticket
+   details and numbers, IBM Plex Sans for reading. Square corners throughout. */
 
-/* Newsreader (SIL Open Font License, see fonts/OFL.txt), served from Slice'd itself so
-   no page ever asks Google for a font. Roman only: the design rules ban italics. */
-@font-face { font-family: "Newsreader"; font-weight: 400; font-display: swap; src: url("/fonts/newsreader-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Newsreader"; font-weight: 500; font-display: swap; src: url("/fonts/newsreader-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Newsreader"; font-weight: 600; font-display: swap; src: url("/fonts/newsreader-latin-600-normal.woff2") format("woff2"); }
+/* Fonts are served by Slice'd itself (SIL Open Font License, see fonts/OFL-*.txt), so no
+   page ever asks a font service for anything. Roman only: the design rules ban italics. */
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: swap; src: url("/fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; font-display: swap; src: url("/fonts/barlow-condensed-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 600; font-display: swap; src: url("/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600; font-display: swap; src: url("/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
 
 :root {
-  --bg: #f6f1e8;           /* paper */
-  --surface: #fffdf9;
-  --text: #1d1813;         /* ink */
-  --text-muted: #655b51;
-  --border: #ddd3c4;       /* thin rules */
-  --rule-strong: #1d1813;  /* the one heavy rule under the header and section titles */
-  --accent: #ad4f2c;       /* paprika: 4.7:1 on paper, 5.3:1 under white text */
-  --accent-dark: #8f3f22;
-  --ok: #3f7a4a;           /* basil */
-  --error: #a33a3a;
-  --error-bg: #fbeaea;
-  --info-bg: #edf3ee;      /* neutral notices; --text on it is 13:1 */
-  --warn: #8a5a00;         /* expiring soon: 5.5:1 on --bg */
-  --input-border: #8a8178;  /* darker than --border: form controls need 3:1 contrast */
-  --accent-soft: #f7e9e1;  /* tinted backgrounds: current page, chips. --accent-dark on it is 7:1 */
-  --ok-bg: #e8f1ea;
+  --bg: #dfe2df;           /* stainless steel */
+  --surface: #ffffff;      /* ticket paper */
+  --text: #121212;
+  --text-muted: #4c524e;   /* 6.1:1 on steel, 8:1 on paper */
+  --border: #b4b9b4;       /* thin rules, the tear edge */
+  --rule-strong: #121212;  /* heavy rules and board lines */
+  --accent: #c0201a;       /* tomato: 4.6:1 on steel, 6:1 under white text */
+  --accent-dark: #9c1a14;
+  --ok: #1b7a3d;           /* only on paper: 5.4:1 */
+  --error: #b3211a;
+  --error-bg: #fbe4e2;
+  --info-bg: #e9efe9;
+  --warn: #8a5a00;
+  --input-border: #4c524e;  /* form controls need 3:1 against what's around them */
+  --accent-soft: #fbe4e2;
+  --ok-bg: #e3f1e7;
   --warn-bg: #fbf1dc;
-  /* Recipe card corners: how much of the recipe is in the kitchen. Each is 3:1 or better
-     on white and on every cover color, so the corner shape is easy to see. */
-  --have-all: #3f7a4a;     /* green: everything */
-  --have-half: #a87400;    /* mustard: at least half */
-  --have-few: #a33a3a;     /* red: less than half */
-  /* Plain covers for recipes without a photo, picked by recipe id. */
-  --cover-1: #ece3d6;
-  --cover-2: #dfe8da;
-  --cover-3: #f3e1d6;
-  --cover-4: #e2e6ec;
-  --cover-5: #f1e8cf;
-  --cover-6: #eadde4;
-  --radius: 8px;
-  --radius-lg: 10px;
-  --shadow: 0 1px 2px rgba(29, 24, 19, 0.05);
-  --page-width: 1120px;
+  --rail: #9aa09b;         /* the ticket rail */
+  --rail-dark: #6c726d;
+  --chalk: #1c1f1d;        /* chalkboards */
+  --chalk-text: #f2f2ee;   /* 14.8:1 on chalk */
+  --chalk-line: #4a4f4c;
+  --chalk-accent: #ffd23f; /* 11.5:1 on chalk */
+  /* Ticket stamps: how much of the recipe is in the kitchen. Each is 3:1 or better on
+     ticket paper, so the stamp is easy to see; the stamp's words say the same thing. */
+  --have-all: #1b7a3d;     /* green: READY, everything on hand */
+  --have-half: #a87400;    /* mustard: NEEDS a few, at least half on hand */
+  --have-few: #b3211a;     /* red: NEEDS more, less than half on hand */
+  --radius: 0;
+  --radius-lg: 0;
+  --shadow: 0 2px 0 #b9bdb9;  /* a ticket's paper edge, not a soft glow */
+  --page-width: 1180px;
   --control-height: 2.75rem;  /* every input, select, and button lines up */
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
   /* Spacing scale: use only these values. */
   --space-1: 0.25rem;
@@ -78,27 +84,31 @@ body {
   min-height: 100vh;
 }
 
+/* Headings read like kitchen signage: condensed, heavy, uppercase. */
 h1, h2, h3 {
   font-family: var(--font-heading);
-  font-weight: 500;
+  font-weight: 800;
   font-style: normal;
-  line-height: 1.2;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.01em;
   margin: 0 0 var(--space-3);
 }
 
-h1 { font-size: 3rem; line-height: 1.05; letter-spacing: -0.02em; }
-h2 { letter-spacing: -0.01em; }
+h1 { font-size: 4rem; line-height: 0.92; }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.35rem; }
 
 @media (max-width: 40rem) {
-  h1 { font-size: 2.25rem; }
+  h1 { font-size: 2.75rem; }
 }
 
-/* Small uppercase labels: section names, meta lines, figures. */
+/* Small uppercase labels and ticket details: section names, meta lines, figures. */
 .label {
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -117,7 +127,6 @@ a:hover { color: var(--accent-dark); }
   z-index: 10;
   padding: var(--space-2) var(--space-4);
   background: var(--surface);
-  border-radius: var(--radius);
 }
 .skip-link:focus { top: var(--space-2); }
 
@@ -134,7 +143,7 @@ a:hover { color: var(--accent-dark); }
 .site-header .inner {
   padding-top: var(--space-4);
   padding-bottom: var(--space-3);
-  border-bottom: 2px solid var(--rule-strong);
+  border-bottom: 3px solid var(--rule-strong);
 }
 
 .site-header .inner,
@@ -150,16 +159,18 @@ a:hover { color: var(--accent-dark); }
   gap: var(--space-2) var(--space-5);
 }
 
-/* The wordmark is set in type; the pot icon stays as the favicon. */
+/* The wordmark is set in type, with a tomato full stop; the pot icon stays as the favicon. */
 .logo {
   font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-size: 2.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
   line-height: 1;
   color: var(--text);
   text-decoration: none;
 }
+.logo::after { content: "."; color: var(--accent); }
 .logo:hover { color: var(--text); }
 .logo img { display: none; }
 
@@ -175,35 +186,32 @@ a:hover { color: var(--accent-dark); }
 .site-nav a {
   display: block;
   padding: var(--space-2) var(--space-3);
-  color: var(--text-muted);
+  border: 2px solid transparent;
+  color: var(--text);
   text-decoration: none;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.site-nav a:hover { color: var(--text); }
+.site-nav a:hover { border-color: var(--text); }
 
-/* The current page is underlined, like a chapter marker. */
+/* The current page is a solid black tab. */
 .site-nav a[aria-current="page"] {
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--accent);
-  text-underline-offset: 0.5em;
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--surface);
 }
 
 /* Phones: logo on one line, the menu on one scrollable line under it. */
 @media (max-width: 40rem) {
   .site-header .inner { row-gap: var(--space-2); }
-  .logo { padding: 0; }
   .site-nav { width: 100%; overflow-x: auto; }
   /* As wide as its links (not the screen), so the right padding is part of what scrolls. */
-  .site-nav ul { flex-wrap: nowrap; gap: 0; padding: 0 var(--space-2) var(--space-1); width: max-content; }
-  .site-nav ul { padding-left: 0; }
-  .site-nav a { white-space: nowrap; padding: var(--space-2); font-size: 0.75rem; }
-  .site-nav li:first-child a { padding-left: 0; }
+  .site-nav ul { flex-wrap: nowrap; gap: 0; padding: 0 var(--space-2) var(--space-1) 0; width: max-content; }
+  .site-nav a { white-space: nowrap; padding: var(--space-2); font-size: 0.72rem; }
 }
 
 /* ---------- Page content ---------- */
@@ -222,15 +230,20 @@ main {
   max-width: 40rem;
 }
 
-/* A section of a page: a heavy rule, a serif title, and the content on the paper.
-   (Still called "card" from before the cookbook look; nothing is boxed anymore.) */
-.card {
-  border-top: 2px solid var(--rule-strong);
-  padding: var(--space-4) 0 0;
-  margin-top: var(--space-7);
+/* A section of a page is an order ticket: white paper, a dashed tear edge on top,
+   a paper edge underneath, and its title over a heavy rule. */
+.card, .ticket {
+  background: var(--surface);
+  border-top: 2px dashed var(--rail);
+  box-shadow: var(--shadow);
+  padding: var(--space-5);
+  margin-top: var(--space-6);
+}
+@media (max-width: 40rem) {
+  .card, .ticket { padding: var(--space-4); }
 }
 
-.card h2 { font-size: 1.75rem; margin-bottom: var(--space-4); }
+.card h2 { font-size: 1.75rem; padding-bottom: var(--space-2); border-bottom: 2px solid var(--rule-strong); margin-bottom: var(--space-4); }
 .card h3 { font-size: 1.25rem; }
 
 .placeholder { color: var(--text-muted); }
@@ -238,7 +251,7 @@ main {
 /* ---------- Long-form text pages (terms, privacy) ---------- */
 
 .prose > * { max-width: 42rem; }  /* readable line length, still left-aligned with the header */
-.prose h2 { font-size: 1.6rem; margin-top: var(--space-7); }
+.prose h2 { font-size: 1.7rem; margin-top: var(--space-7); }
 .prose ul { margin: 0 0 var(--space-4); padding-left: var(--space-5); }
 .prose li { margin-bottom: var(--space-2); }
 .updated { color: var(--text-muted); }
@@ -249,7 +262,7 @@ main {
   color: var(--text-muted);
   font-size: 0.9rem;
 }
-.site-footer .inner { border-top: 1px solid var(--border); padding-top: var(--space-4); padding-bottom: var(--space-5); }
+.site-footer .inner { border-top: 3px solid var(--rule-strong); padding-top: var(--space-4); padding-bottom: var(--space-5); font-family: var(--font-mono); font-size: 0.8rem; }
 
 .site-footer p { margin: 0; }
 
@@ -267,31 +280,35 @@ main {
 /* ---------- Buttons ---------- */
 /* Hover changes color instantly. No transitions or fades. */
 
+/* Buttons: square, with a mono label, like a kitchen printer's keys. */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: var(--control-height);
   padding: var(--space-2) var(--space-4);
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  font: inherit;
+  border: 2px solid transparent;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   line-height: 1.5;
   text-decoration: none;
   cursor: pointer;
 }
 
-.button-primary { background: var(--accent); color: #fff; }
-.button-primary:hover { background: var(--accent-dark); color: #fff; }
+.button-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.button-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
 
-.button-secondary { background: var(--surface); color: var(--text); border-color: var(--input-border); }
-.button-secondary:hover { background: var(--bg); color: var(--text); }
+.button-secondary { background: var(--surface); color: var(--text); border-color: var(--text); }
+.button-secondary:hover { background: var(--text); color: var(--surface); }
 
-.button-danger { background: var(--surface); color: var(--error); border-color: var(--input-border); }
-.button-danger:hover { background: var(--error-bg); color: var(--error); }
+.button-danger { background: var(--surface); color: var(--error); border-color: var(--error); }
+.button-danger:hover { background: var(--error); color: #fff; }
 
-.button:disabled { cursor: not-allowed; background: var(--border); color: var(--text-muted); }
+.button:disabled { cursor: not-allowed; background: var(--border); border-color: var(--border); color: var(--text-muted); }
 
 .actions {
   display: flex;
@@ -310,8 +327,11 @@ main {
 
 .field label,
 .field-label {
+  font-family: var(--font-mono);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .hint { color: var(--text-muted); font-size: 0.9rem; }
@@ -326,16 +346,16 @@ textarea {
   width: 100%;
   min-height: var(--control-height);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--input-border);
-  border-radius: var(--radius);
+  border: 2px solid var(--input-border);
+  border-radius: 0;
   background-color: var(--surface);
   color: var(--text);
   font: inherit;
   line-height: 1.4;
 }
 
-input:hover, select:hover, textarea:hover { border-color: var(--text-muted); }
-::placeholder { color: #7a7168; opacity: 1; }  /* 4.6:1 on white */
+input:hover, select:hover, textarea:hover { border-color: var(--text); }
+::placeholder { color: #6b706c; opacity: 1; }  /* 4.9:1 on white */
 
 /* Safari draws selects and search boxes its own way (shorter, glossy). Draw them like the other fields. */
 select,
@@ -345,7 +365,7 @@ input[type="search"] {
 }
 select {
   padding-right: var(--space-6);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236b625a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23121212' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right var(--space-3) center;
   cursor: pointer;
@@ -357,7 +377,7 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
 
-input[type="checkbox"] { accent-color: var(--accent-dark); }
+input[type="checkbox"] { accent-color: var(--text); }
 
 textarea { min-height: 8rem; resize: vertical; }
 textarea#instructions { min-height: 16rem; }
@@ -371,15 +391,17 @@ textarea#instructions { min-height: 16rem; }
 .form-stack { display: grid; gap: var(--space-4); }
 
 /* A fieldset styled as a card, with its legend as the card title (not sitting on the border). */
-fieldset.card { min-width: 0; margin-left: 0; margin-right: 0; border: none; border-top: 2px solid var(--rule-strong); padding-left: 0; padding-right: 0; }
+fieldset.card { min-width: 0; margin-left: 0; margin-right: 0; border: none; border-top: 2px dashed var(--rail); }
 fieldset.card > legend {
   float: left;
   width: 100%;
-  padding: 0;
-  margin-bottom: var(--space-2);
+  padding: 0 0 var(--space-2);
+  border-bottom: 2px solid var(--rule-strong);
+  margin-bottom: var(--space-3);
   font-family: var(--font-heading);
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 fieldset.card > legend + * { clear: both; }
 
@@ -388,13 +410,13 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 
 .alert {
   padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius);
-  border: 1px solid transparent;
+  border-radius: 0;
+  border: 2px solid transparent;
   white-space: pre-line;  /* show one error per line */
 }
 
-.alert-error { background: var(--error-bg); color: var(--error); border-color: #efc9c9; }
-.alert-info { background: var(--info-bg); color: var(--text); }
+.alert-error { background: var(--error-bg); color: var(--error); border-color: var(--error); }
+.alert-info { background: var(--info-bg); color: var(--text); border-color: var(--text); }
 
 /* ---------- Recipe list ---------- */
 
@@ -417,79 +439,111 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 .filters .field-search { flex: 1 1 12rem; }
 .filters .field-select { flex: 0 1 9rem; }
 
-.result-count { color: var(--text-muted); margin-top: var(--space-5); }
+.result-count { color: var(--text-muted); margin-top: var(--space-5); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
 
 /* Pinterest-style grid: 1px rows, and recipes.js makes each card span its own height,
-   so cards of different heights pack into columns. */
+   so tickets of different heights pack into columns. A rail runs along the top. */
 .recipe-grid {
+  position: relative;
   list-style: none;
   margin: var(--space-4) 0 0;
-  padding: 0;
+  padding: var(--space-6) 0 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   grid-auto-rows: 1px;
   column-gap: var(--space-5);
   align-items: start;
 }
-
-/* No box: a cover, then type on the paper, like a page of a cookbook. */
-.recipe-card { position: relative; }  /* lets the title link cover the whole card */
-
-.recipe-cover { position: relative; min-height: 7rem; border-radius: var(--radius); overflow: hidden; }
-.recipe-cover img { display: block; width: 100%; height: auto; max-height: 24rem; object-fit: cover; }
-
-/* Without a photo: the title's first letter, large and faint, like a book cover.
-   Three heights, so a grid of plain covers still has a rhythm. */
-.recipe-cover.is-plain { display: flex; align-items: flex-end; }
-.cover-initial {
-  font-family: var(--font-heading);
-  font-size: 7rem;
-  font-weight: 500;
-  line-height: 0.8;
-  padding: var(--space-4);
-  color: var(--text);
-  opacity: 0.13;
-}
-.recipe-grid .recipe-cover.is-plain.cover-1, .recipe-grid .recipe-cover.is-plain.cover-4 { height: 11rem; }
-.recipe-grid .recipe-cover.is-plain.cover-2, .recipe-grid .recipe-cover.is-plain.cover-5 { height: 14rem; }
-.recipe-grid .recipe-cover.is-plain.cover-3, .recipe-grid .recipe-cover.is-plain.cover-6 { height: 17rem; }
-.cover-1 { background: var(--cover-1); }
-.cover-2 { background: var(--cover-2); }
-.cover-3 { background: var(--cover-3); }
-.cover-4 { background: var(--cover-4); }
-.cover-5 { background: var(--cover-5); }
-.cover-6 { background: var(--cover-6); }
-
-/* The colored corner: a triangle in the cover's top right, with a thin white
-   edge so it stands out on photos too. */
-.corner {
+.recipe-grid::before, .picks::before {
+  content: "";
   position: absolute;
   top: 0;
-  right: 0;
-  width: 3rem;
-  height: 3rem;
-  background: var(--surface);
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  left: calc(-1 * var(--space-3));
+  right: calc(-1 * var(--space-3));
+  height: 0.85rem;
+  background: var(--rail);
+  border-top: 2px solid #c9cdc9;
+  border-bottom: 3px solid var(--rail-dark);
 }
-.corner::after {
+
+/* A recipe is an order ticket: white paper, dashed tear edge, a clip at the top. */
+.recipe-card, .pick {
+  position: relative;  /* lets the title link cover the whole card */
+  background: var(--surface);
+  border-top: 2px dashed var(--rail);
+  box-shadow: var(--shadow);
+}
+/* The colored corner: green (everything on hand), mustard (at least half), red (less),
+   folded into the ticket's top right. The stamp says the same in words. */
+.recipe-card::after, .pick::after {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
-  width: 2.75rem;
-  height: 2.75rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
   clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
-.corner-green::after, .corner-swatch.corner-green { background: var(--have-all); }
-.corner-yellow::after, .corner-swatch.corner-yellow { background: var(--have-half); }
-.corner-red::after, .corner-swatch.corner-red { background: var(--have-few); }
+.color-green::after { background: var(--have-all); }
+.color-yellow::after { background: var(--have-half); }
+.color-red::after { background: var(--have-few); }
+.corner-swatch { display: inline-block; width: 1rem; height: 1rem; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.corner-swatch.color-green { background: var(--have-all); }
+.corner-swatch.color-yellow { background: var(--have-half); }
+.corner-swatch.color-red { background: var(--have-few); }
 
-.recipe-card-body { padding: var(--space-3) 0 0; }
+.recipe-cover { position: relative; border-bottom: 2px solid var(--text); }
+.recipe-cover img { display: block; width: 100%; height: auto; max-height: 22rem; object-fit: cover; }
 
-.recipe-card h2 { font-size: 1.4rem; line-height: 1.15; margin-bottom: var(--space-1); }
+/* The stamp: READY, or NEEDS 3, in green, mustard, or red, slightly crooked like a real
+   rubber stamp. The words carry the meaning; the color helps. */
+.stamp {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 3px solid currentColor;
+  background: var(--surface);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-6deg);
+}
+.stamp-green { color: var(--have-all); }
+.stamp-yellow { color: var(--have-half); }
+.stamp-red { color: var(--have-few); }
+.recipe-card .stamp, .pick .stamp { position: absolute; right: var(--space-3); bottom: var(--space-4); z-index: 1; }
+
+/* Room at the bottom for the pin button and the stamp, side by side. */
+.recipe-card-body { padding: var(--space-3) var(--space-4) var(--space-4); }
+.recipe-card .pin-button { margin-top: var(--space-2); }
+
+/* Ticket header: number and time in mono, over a rule. */
+.ticket-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ticket-head span:last-child { white-space: nowrap; }
+
+/* Keep the header clear of the colored corner when there's no photo above it. */
+.recipe-card > .recipe-card-body:first-child .ticket-head,
+.pick > .pick-body:first-child .ticket-head { padding-right: var(--space-6); }
+
+.recipe-card h2 { font-size: 1.7rem; line-height: 0.95; margin-bottom: var(--space-2); }
 
 .recipe-card h2 a { color: var(--text); text-decoration: none; }
-.recipe-card:hover h2 a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+.recipe-card:hover h2 a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; }
 .card-meta { margin-bottom: var(--space-2); }
 
 .recipe-card h2 a::after {
@@ -510,8 +564,8 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 
 /* Sits above the link that covers the card, so it can be clicked on its own. */
 .pin-button { position: relative; z-index: 1; }
-.pin-button.is-pinned { background: var(--accent-soft); color: var(--accent-dark); }
-.pin-button.is-pinned:hover { background: var(--accent-soft); color: var(--text); }
+.pin-button.is-pinned { background: var(--text); color: var(--surface); }
+.pin-button.is-pinned:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 /* The key above the grid */
 .color-key {
@@ -520,16 +574,12 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   align-items: center;
   gap: var(--space-2) var(--space-3);
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
 }
 .color-key ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); list-style: none; margin: 0; padding: 0; }
 .color-key li { display: flex; align-items: center; gap: var(--space-2); }
-.corner-swatch {
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
-}
+.color-key .stamp { font-size: 0.85rem; border-width: 2px; transform: none; }
 
 .meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: var(--space-3); }
 
@@ -542,9 +592,9 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   justify-content: space-between;
   gap: var(--space-3);
 }
-.title-row h1 { margin-bottom: 0; font-size: 3.5rem; max-width: 48rem; }
+.title-row h1 { margin-bottom: 0; font-size: 4.5rem; max-width: 52rem; }
 @media (max-width: 40rem) {
-  .title-row h1 { font-size: 2.5rem; }
+  .title-row h1 { font-size: 2.75rem; }
 }
 .title-row .pin-button { margin-top: var(--space-2); }
 
@@ -554,20 +604,21 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   max-height: 28rem;
   object-fit: cover;
   margin-top: var(--space-6);
-  border-radius: var(--radius);
+  border: 3px solid var(--text);
 }
 
-.back-link { margin-bottom: var(--space-5); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.back-link { margin-bottom: var(--space-5); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .back-link a { color: var(--text-muted); text-decoration: none; }
 .back-link a:hover { color: var(--text); }
 
-/* Cuisine, servings, times: figures between two thin rules, like the home page. */
+/* Cuisine, servings, times: a board of cells with heavy black lines between them. */
 .facts {
   display: flex;
   flex-wrap: wrap;
+  gap: 3px;
   margin: var(--space-6) 0 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  background: var(--text);
+  border: 3px solid var(--text);
 }
 
 .facts > div {
@@ -576,25 +627,22 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   justify-content: flex-start;
   gap: var(--space-1);
   flex: 1 1 7rem;
-  padding: var(--space-3) var(--space-5);
-  border-left: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
 }
-.facts > div:first-child { border-left: none; padding-left: 0; }
 
 /* Phones: cuisine and servings on the first row, the three times on the second. */
 @media (max-width: 40rem) {
   .facts { display: grid; grid-template-columns: repeat(6, 1fr); }
-  .facts > div { padding: var(--space-3) var(--space-4); grid-column: span 2; }
+  .facts > div { grid-column: span 2; }
   .facts > div:nth-child(-n + 2) { grid-column: span 3; }
-  .facts > div:nth-child(n + 3) { border-top: 1px solid var(--border); }
-  .facts > div:nth-child(3) { border-left: none; padding-left: 0; }
 }
-.facts dt { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-.facts dd { margin: 0; font-family: var(--font-heading); font-size: 1.5rem; line-height: 1.2; }
+.facts dt { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.facts dd { margin: 0; font-family: var(--font-heading); font-weight: 800; font-size: 1.9rem; line-height: 1.05; text-transform: uppercase; }
 
 .recipe-layout {
   display: grid;
-  gap: 0 var(--space-7);
+  gap: 0 var(--space-5);
   align-items: start;
 }
 
@@ -606,7 +654,7 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 
 .ingredient-list li {
   padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 
 .ingredient-list li:last-child { border-bottom: none; }
@@ -633,7 +681,7 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 .link-button.is-danger { color: var(--error); }
 
 /* What's in the kitchen: a text label on each ingredient, never color alone. */
-.match-summary { font-weight: 600; margin-bottom: var(--space-3); }
+.match-summary { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: var(--space-3); }
 .match-summary.is-ready { color: var(--ok); }
 
 /* Ingredient text on the left, status on the right, note underneath. */
@@ -644,7 +692,7 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   align-items: baseline;
 }
 
-.ingredient-status { font-size: 0.9rem; font-weight: 600; white-space: nowrap; }
+.ingredient-status { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
 .ingredient-status-have { color: var(--ok); }
 .ingredient-status-short { color: var(--warn); }
 .ingredient-status-expired { color: var(--error); }
@@ -662,22 +710,26 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 .ai-ideas li { border-bottom: none; padding: 0; }
 .ai-heading { font-weight: 600; }
 
-/* Steps set like a cookbook: a large serif number beside each one. */
+/* Steps with a big tomato number beside each one. */
 .steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
 .steps li {
   counter-increment: step;
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr);
+  grid-template-columns: 2.75rem minmax(0, 1fr);
   gap: var(--space-3);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px dashed var(--border);
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.65;
 }
+.steps li:last-child { border-bottom: none; }
 .steps li::before {
-  content: counter(step);
+  content: counter(step, decimal-leading-zero);
   font-family: var(--font-heading);
-  font-size: 1.75rem;
-  line-height: 1.1;
+  font-weight: 800;
+  font-size: 2.1rem;
+  line-height: 0.9;
   color: var(--accent);
   font-variant-numeric: lining-nums;
 }
@@ -690,7 +742,7 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   grid-template-columns: 1fr 1fr;
   align-items: end;
   padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 
 .ingredient-row .field-name,
@@ -756,16 +808,18 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 #share-status { margin-top: var(--space-2); }
 
 .list-section { margin-top: var(--space-6); }
-.list-section h2 { font-size: 1.5rem; margin-bottom: var(--space-2); }
-.section-count { color: var(--text-muted); font-family: var(--font-body); font-size: 0.9rem; }
+.list-section h2 { font-size: 1.7rem; margin-bottom: var(--space-3); }
+.section-count { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.9rem; }
 
-/* Ruled lists: a thin line between rows, nothing boxed. */
+/* Lists are tickets: white paper, dashed lines between rows. */
 .inventory-list,
 .grocery-list {
   list-style: none;
   margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
+  padding: 0 var(--space-4);
+  background: var(--surface);
+  border-top: 2px dashed var(--rail);
+  box-shadow: var(--shadow);
 }
 
 .inventory-list:empty { display: none; }
@@ -776,8 +830,9 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
   align-items: center;
   gap: var(--space-2) var(--space-4);
   padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
+.inventory-item:last-child { border-bottom: none; }
 .inventory-name { font-weight: 600; margin: 0; }
 .inventory-item .meta { margin: 0; }
 .inventory-actions { display: flex; align-items: center; gap: var(--space-4); }
@@ -799,31 +854,34 @@ input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
 #import-card .alert, #import-card .checkbox-row { margin-top: var(--space-4); }
 #import-result ul { margin: var(--space-2) 0 0; padding-left: var(--space-5); }
 .import-help { margin-top: var(--space-4); }
-.import-help summary { cursor: pointer; color: var(--accent-dark); }
+.import-help summary { cursor: pointer; color: var(--accent-dark); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; }
 .import-help p { margin-top: var(--space-3); }
 .import-help .button { margin-left: var(--space-1); }
 
 .checkbox-row { display: flex; align-items: center; gap: var(--space-2); cursor: pointer; }
-.checkbox-row input { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent-dark); }
-.history-heading { font-size: 1.1rem; margin-top: var(--space-5); }
+.checkbox-row input { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--text); }
+.history-heading { font-size: 1.3rem; margin-top: var(--space-5); }
 .history-list { list-style: none; margin: 0; padding: 0; }
-.history-list li { padding: var(--space-2) 0; border-bottom: 1px solid var(--border); }
+.history-list li { padding: var(--space-2) 0; border-bottom: 1px dashed var(--border); }
 .history-list li:last-child { border-bottom: none; }
 .history-list p { margin: 0; }
 #cooked-result ul, #grocery-result ul { margin: 0 0 var(--space-2); padding-left: var(--space-5); }
 #cooked-result p, #grocery-result p { margin-bottom: var(--space-2); }
 
 /* History page */
-.history-page-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; border-top: 1px solid var(--border); }
+.history-page-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; }
 .history-entry {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-2) var(--space-4);
   align-items: start;
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-4);
+  background: var(--surface);
+  border-top: 2px dashed var(--rail);
+  box-shadow: var(--shadow);
 }
-.history-title { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 500; color: var(--text); text-decoration: none; }
+.history-title { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; text-transform: uppercase; line-height: 1; color: var(--text); text-decoration: none; }
 a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 .history-entry .meta { margin: 0; }
 .history-rating { flex-direction: row; align-items: center; gap: var(--space-2); }
@@ -854,10 +912,11 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
   align-items: center;
   gap: var(--space-1) var(--space-4);
   padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
+.grocery-item:last-child { border-bottom: none; }
 .grocery-item label { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; }
-.grocery-item input[type="checkbox"] { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent-dark); }
+.grocery-item input[type="checkbox"] { width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--text); }
 .grocery-name { font-weight: 600; }
 .grocery-item .meta { margin: 0; }
 .grocery-item.is-checked .grocery-name { text-decoration: line-through; color: var(--text-muted); }
@@ -865,16 +924,16 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 #stock-result ul { margin: 0; padding-left: var(--space-5); }
 #stock-result p { margin-bottom: var(--space-2); }
 
-/* "You have 6 of 8 ingredients" on recipe cards: the corner color, in words */
-.recipe-card .match-line { font-weight: 600; font-size: 0.9rem; margin-bottom: var(--space-2); }
+/* "You have 6 of 8 ingredients" on recipe tickets, in ticket type */
+.recipe-card .match-line { font-family: var(--font-mono); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: var(--space-2); }
 .match-green { color: var(--ok); }
 .match-yellow { color: var(--warn); }
 .match-red { color: var(--error); }
 
 /* AI ingredient suggestion, shown under the inventory form */
 .ai-panel {
-  background: var(--bg);
-  border-radius: var(--radius);
+  background: var(--info-bg);
+  border: 2px solid var(--text);
   padding: var(--space-4);
 }
 .ai-panel p { margin: 0 0 var(--space-2); }
@@ -883,7 +942,7 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 
 /* ---------- Profile ---------- */
 
-.profile-grid { display: grid; gap: 0 var(--space-7); align-items: start; }
+.profile-grid { display: grid; gap: 0 var(--space-5); align-items: start; }
 /* The figures above already leave room: the first sections don't add more. */
 .profile-grid > .card, .profile-side > .card:first-child { margin-top: 0; }
 @media (min-width: 60rem) {
@@ -893,29 +952,28 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 /* Radar chart: thin gray grid, one shape in the accent color, dots with a white ring. */
 .radar { position: relative; max-width: 26rem; margin: 0 auto; }
 .radar svg { display: block; width: 100%; height: auto; overflow: visible; }
-.radar-grid { fill: none; stroke: var(--border); stroke-width: 1; }
+.radar-grid { fill: none; stroke: var(--border); stroke-width: 1; stroke-dasharray: 3 3; }
 .radar-shape { fill: var(--accent); fill-opacity: 0.14; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
 .radar-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 2; }
 .radar-hit { fill: transparent; cursor: default; }
 .radar-hit:focus { outline: none; }
 .radar-hit:focus-visible { stroke: var(--accent-dark); stroke-width: 2; }
-.radar-label { fill: var(--text-muted); font-size: 13px; font-family: var(--font-body); }
+.radar-label { fill: var(--text); font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; }
 
 .chart-tooltip {
   position: absolute;
   transform: translate(-50%, calc(-100% - var(--space-3)));
   padding: var(--space-1) var(--space-2);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  font-size: 0.9rem;
+  border: 2px solid var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   white-space: nowrap;
   pointer-events: none;
 }
 
 /* Bars: a flavor or an ingredient, a bar, and its number in words. */
-.flavor-dna-heading { font-size: 1.1rem; margin-top: var(--space-5); }
+.flavor-dna-heading { font-size: 1.35rem; margin-top: var(--space-5); }
 .flavor-bars, .top-ingredients { list-style: none; margin: var(--space-3) 0; padding: 0; }
 .flavor-bar, .top-ingredients li {
   display: grid;
@@ -925,15 +983,16 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
   padding: var(--space-1) 0;
 }
 .flavor-bar { grid-template-columns: 6.5rem minmax(0, 1fr) 2.5rem; }
-.flavor-level { color: var(--text-muted); font-size: 0.9rem; text-align: right; font-variant-numeric: tabular-nums; }
+.flavor-bar > span:first-child, .top-ingredients li > span:first-child { font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase; }
+.flavor-level { color: var(--text); font-family: var(--font-mono); font-size: 0.85rem; text-align: right; font-variant-numeric: tabular-nums; }
 .flavor-because { grid-column: 2 / -1; margin-top: calc(-1 * var(--space-1)); }
-.bar-track { display: block; height: 0.5rem; background: var(--border); border-radius: 999px; overflow: hidden; }
+.bar-track { display: block; height: 0.75rem; background: var(--bg); border: 2px solid var(--text); overflow: hidden; }
 #flavor-card .flavor-bars { max-width: 40rem; }
-.bar-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.bar-fill { display: block; height: 100%; background: var(--accent); }
 
-.taste-note { font-weight: 600; margin-bottom: var(--space-4); }
+.taste-note { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; padding: var(--space-3); border: 2px solid var(--text); margin-bottom: var(--space-4); }
 .observations { list-style: none; margin: 0; padding: 0; }
-.observations li { padding: var(--space-3) 0; border-bottom: 1px solid var(--border); }
+.observations li { padding: var(--space-3) 0; border-bottom: 1px dashed var(--border); }
 .observations li:first-child { padding-top: 0; }
 .observations li:last-child { border-bottom: none; padding-bottom: 0; }
 .observations p { margin: 0; }
@@ -941,41 +1000,39 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 
 /* ---------- Home ---------- */
 
-.hero { max-width: 48rem; padding-bottom: var(--space-6); }
-.hero h1 { font-size: 4.5rem; line-height: 0.98; letter-spacing: -0.03em; margin-bottom: var(--space-4); }
+.hero { max-width: 56rem; padding-bottom: var(--space-6); }
+.hero h1 { font-size: 5.5rem; line-height: 0.88; margin-bottom: var(--space-4); }
 @media (max-width: 40rem) {
-  .hero h1 { font-size: 2.75rem; }
+  .hero h1 { font-size: 3rem; }
 }
 
-/* Four numbers set like figures in a book, between two thin rules. */
+/* The board: numbers in cells with heavy black lines between them (home, profile, meal prep). */
 .figures {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin: 0 0 var(--space-8);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  gap: 3px;
+  margin: 0 0 var(--space-7);
+  background: var(--text);
+  border: 3px solid var(--text);
 }
-.figures > div { padding: var(--space-4) var(--space-5) var(--space-5) 0; }
-.figures > div + div { border-left: 1px solid var(--border); padding-left: var(--space-5); }
+.figures > div { padding: var(--space-3) var(--space-4) var(--space-4); background: var(--surface); }
 .figures dd {
-  margin: var(--space-2) 0 0;
+  margin: var(--space-1) 0 0;
   font-family: var(--font-heading);
-  font-size: 3.25rem;
-  font-weight: 400;
-  line-height: 1;
-  font-variant-numeric: lining-nums tabular-nums;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
 }
 .figures a { color: var(--text); text-decoration: none; }
-.figures dd.is-text { font-size: 1.5rem; line-height: 1.3; }
+.figures dd.is-text { font-size: 1.6rem; line-height: 1.1; text-transform: uppercase; }
 .figures a:hover { color: var(--accent); }
 @media (max-width: 48rem) {
   .figures { grid-template-columns: 1fr 1fr; }
-  .figures > div:nth-child(3) { border-left: none; padding-left: 0; }
-  .figures > div:nth-child(n + 3) { border-top: 1px solid var(--border); }
-  .figures dd { font-size: 2.5rem; }
+  .figures dd { font-size: 2.6rem; }
 }
 
-.home-section { margin-bottom: var(--space-8); }
+.home-section { margin-bottom: var(--space-7); }
 
 /* A section starts with a heavy rule, its title, and a small link on the right. */
 .section-head {
@@ -984,79 +1041,115 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-2) var(--space-4);
-  border-top: 2px solid var(--rule-strong);
+  border-top: 3px solid var(--rule-strong);
   padding-top: var(--space-3);
   margin-bottom: var(--space-5);
 }
-.section-head h2 { font-size: 2rem; margin: 0; }
+.section-head h2 { font-size: 2.2rem; margin: 0; }
 .label-link {
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--text);
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
-  text-underline-offset: 0.45em;
+  text-underline-offset: 0.4em;
 }
 .label-link:hover { color: var(--accent); }
 
-/* Tonight's picks: three covers with numbered titles. */
+/* Tonight's picks: three order tickets hanging on the rail. */
 .picks {
+  position: relative;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: var(--space-6) 0 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-6) var(--space-5);
+  align-items: start;
 }
 @media (max-width: 48rem) {
   .picks { grid-template-columns: 1fr; }
 }
-.pick .recipe-cover { aspect-ratio: 4 / 3; min-height: 0; margin-bottom: var(--space-4); }
+.pick::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--space-5));
+  left: 50%;
+  width: 1.6rem;
+  height: 0.85rem;
+  margin-left: -0.8rem;
+  background: var(--rail-dark);
+}
+.pick .recipe-cover { aspect-ratio: 4 / 3; }
 .pick .recipe-cover img { height: 100%; max-height: none; }
-.pick h3 { font-size: 1.6rem; line-height: 1.15; margin-bottom: var(--space-2); }
+.pick-body { padding: var(--space-3) var(--space-4) var(--space-5); }
+.pick h3 { font-size: 2rem; line-height: 0.95; margin-bottom: var(--space-3); }
 .pick h3 a { color: var(--text); text-decoration: none; }
-.pick h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
-.pick-number { color: var(--accent); margin-right: var(--space-2); font-variant-numeric: lining-nums; }
-.pick .label { margin-bottom: var(--space-2); }
-.pick-have { font-size: 0.95rem; font-weight: 600; margin-bottom: var(--space-2); }
+.pick h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; }
+.ticket-lines { list-style: none; margin: 0 0 var(--space-5); padding: 0; font-family: var(--font-mono); font-size: 0.82rem; }
+.ticket-lines li { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-1) 0; }
+.ticket-lines li span:last-child { text-align: right; }
+.ticket-lines .line-missing { color: var(--error); font-weight: 600; }
+.pick .stamp { bottom: var(--space-3); }
 
-/* The next five, as a numbered contents list. */
-.rec-index { list-style: none; margin: var(--space-7) 0 0; padding: 0; border-top: 1px solid var(--border); }
+/* The next five, as a numbered list on the steel. */
+.rec-index { list-style: none; margin: var(--space-7) 0 0; padding: 0; border-top: 3px solid var(--rule-strong); }
 .index-row {
   display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr) auto 3rem;
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto 3.5rem;
   align-items: baseline;
   gap: var(--space-1) var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--text-muted);
 }
 .index-number, .index-score {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  color: var(--text-muted);
-  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: 800;
+  font-size: 1.8rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
-.index-score { text-align: right; color: var(--text); }
-.index-title a { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500; color: var(--text); text-decoration: none; }
-.index-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
+.index-number { color: var(--accent); }
+.index-score { text-align: right; }
+.index-title a { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 800; text-transform: uppercase; line-height: 1; color: var(--text); text-decoration: none; }
+.index-title a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.12em; }
 .index-meta { display: block; margin-top: var(--space-1); }
-.index-have { font-size: 0.9rem; font-weight: 600; }
+.index-have { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+/* On the steel background, green and mustard are too light to read: say it in ink. */
+.index-have.match-green, .index-have.match-yellow { color: var(--text); }
 @media (max-width: 40rem) {
-  .index-row { grid-template-columns: 2.25rem minmax(0, 1fr) 2.5rem; }
+  .index-row { grid-template-columns: 2.5rem minmax(0, 1fr) 2.75rem; }
   .index-have { grid-column: 2; grid-row: 2; }
   .index-score { grid-column: 3; grid-row: 1; }
 }
-.score-note { margin-top: var(--space-5); max-width: 42rem; }
+.score-note { margin-top: var(--space-5); max-width: 46rem; }
 
-.home-columns { display: grid; gap: 0 var(--space-7); }
+/* Side-by-side chalkboards: use soon and to buy (home), prep and shopping (meal prep). */
+.home-columns { display: grid; gap: var(--space-5); align-items: start; }
 @media (min-width: 48rem) {
   .home-columns { grid-template-columns: 1fr 1fr; }
 }
+.home-columns .home-section {
+  margin: 0;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  background: var(--chalk);
+  color: var(--chalk-text);
+}
+.home-columns .section-head { border-top: none; padding-top: 0; border-bottom: 2px solid var(--chalk-line); padding-bottom: var(--space-2); margin-bottom: var(--space-3); }
+.home-columns .section-head h2 { color: var(--chalk-accent); font-size: 1.9rem; }
+.home-columns .label-link { color: var(--chalk-text); text-decoration-color: var(--chalk-accent); }
+.home-columns .hint, .home-columns .meta { color: #c3c7c1; }  /* 9.6:1 on the chalkboard */
+.home-columns .alert { color: var(--text); }
+.home-columns .ruled-list { font-family: var(--font-mono); font-size: 0.88rem; }
+.home-columns .ruled-list li { border-bottom-color: var(--chalk-line); }
+.home-columns .button-secondary { background: var(--chalk); color: var(--chalk-text); border-color: var(--chalk-text); }
+.home-columns .button-secondary:hover { background: var(--chalk-text); color: var(--chalk); }
 
-/* Lists split by thin rules: name on the left, detail on the right. */
+/* Lists split by dashed rules: name on the left, detail on the right. */
 .ruled-list { list-style: none; margin: 0; padding: 0; }
 .ruled-list li {
   display: flex;
@@ -1064,14 +1157,14 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-1) var(--space-4);
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--border);
+  padding: var(--space-2) 0;
+  border-bottom: 1px dashed var(--border);
 }
-.ruled-list li:first-child { padding-top: 0; }
+.ruled-list li:last-child { border-bottom: none; }
 
 /* ---------- Meal prep ---------- */
 
-.choice-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.choice-list { list-style: none; margin: 0; padding: 0; }
 @media (min-width: 60rem) {
   .choice-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-7); }
 }
@@ -1082,7 +1175,7 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
   justify-content: space-between;
   gap: var(--space-2) var(--space-4);
   padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px dashed var(--border);
 }
 .choice .checkbox-row { flex: 1 1 16rem; }
 .choice .label { margin-left: var(--space-2); }
@@ -1091,10 +1184,10 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 #choices-status { margin-bottom: var(--space-3); }
 
 .prep-figures { margin-top: var(--space-7); }
-.prep-title { margin: 0; font-weight: 600; }
+.prep-title { margin: 0; font-weight: 600; text-transform: uppercase; }
 .ruled-list li p { margin: 0; }
 #buy-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; }
-.prep-amount { font-family: var(--font-heading); font-size: 1.15rem; white-space: nowrap; text-align: right; }
+.prep-amount { font-family: var(--font-heading); font-weight: 800; font-size: 1.3rem; white-space: nowrap; text-align: right; color: var(--chalk-accent); }
 #covered { margin-top: var(--space-4); }
 
 /* Card title with a small link on the right. */
@@ -1108,9 +1201,10 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 }
 .card-heading h2 { margin: 0; }
 .card-heading a {
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--text);
   text-decoration-color: var(--accent);
@@ -1120,19 +1214,21 @@ a.history-title:hover { color: var(--accent-dark); text-decoration: underline; }
 
 /* Use soon: name and amount stacked on the left, the expiry label on the right. */
 #use-soon-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-#use-soon-list .meta { display: block; font-size: 0.85rem; }
+#use-soon-list .meta { display: block; font-size: 0.8rem; }
 #grocery-more { margin-top: var(--space-2); }
 
-/* Small tinted labels for expiration. The words carry the meaning; color only helps. */
+/* Expiry labels: small square tags in ticket type. */
 .chip {
   display: inline-block;
   padding: 0 var(--space-2);
-  border-radius: 999px;
-  font-size: 0.8rem;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 600;
+  text-transform: uppercase;
   line-height: 1.8;
   white-space: nowrap;
 }
 .chip-expired { background: var(--error-bg); color: var(--error); }
 .chip-expiring_soon { background: var(--warn-bg); color: var(--warn); }
-.chip-fresh, .chip-none { background: var(--bg); color: var(--text-muted); }
+.chip-fresh, .chip-none { background: var(--surface); color: var(--text-muted); }

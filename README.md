@@ -13,7 +13,7 @@ Slice'd is a cooking app built around one idea: *ingredient-aware recipe discove
 **Your kitchen, matched against your recipes**
 - **Inventory** for pantry, fridge, and freezer, with amounts and expiration dates.
 - **Ingredient matching** on every recipe: have, not enough, expired, or missing. "Eggs" matches "egg", "scallions" match "green onion", and 2 cups compares with 1 tbsp.
-- **A colored corner on every recipe card:** green (you have everything), yellow (at least half), red (less than half), with the same fact in words.
+- **Every recipe is an order ticket** with a colored corner and a rubber stamp: green READY (you have everything), mustard NEEDS 2 (at least half), red NEEDS 5 (less than half).
 - **Recipe scaling** with kitchen fractions and unit conversion (6 tsp becomes 2 tbsp).
 
 **Deciding what to cook**
@@ -33,9 +33,9 @@ Slice'd is a cooking app built around one idea: *ingredient-aware recipe discove
 
 ## Screenshots
 
-| Recipes, with colored corners | A recipe |
+| Recipes as order tickets | A recipe |
 |---|---|
-| ![A grid of recipe cards with covers, colored corners, and "you have 6 of 8 ingredients" lines](docs/screenshots/recipes.png) | ![A recipe page with facts between rules, ingredients with swaps, and numbered steps](docs/screenshots/recipe.png) |
+| ![A grid of recipe tickets on a rail, each with a colored corner and a READY or NEEDS stamp](docs/screenshots/recipes.png) | ![A recipe page with a board of facts, an ingredient ticket with swaps, and numbered steps](docs/screenshots/recipe.png) |
 | **Profile** | **Meal prep** |
 | ![The profile page with stats, a flavor radar chart, and observations](docs/screenshots/profile.png) | ![Meal prep with chosen recipes, prep-together steps, and a combined shopping list](docs/screenshots/meal-prep.png) |
 | **Inventory** | **Grocery list** |
@@ -63,13 +63,14 @@ Browser ──HTTP──▶ FastAPI (one server)
 Design decisions worth knowing:
 - **Deterministic first.** Matching, units, scoring, taste, flavors, meal prep, and the recipe importer are plain code, so the same kitchen always gives the same answer and every number can be explained. AI is only used where rules can't work (identifying an unfamiliar ingredient, creative substitutions), and the app works fully without it.
 - **Private by default.** Everything lives in one SQLite file and a photos folder on your computer. Fonts are served by Slice'd itself, so pages make no outside requests.
-- **Accessible.** WCAG AA color contrast (checked by tests), keyboard focus, screen-reader labels, and color never used alone.
+- **A design with a concept.** The interface is a restaurant kitchen line: recipes are order tickets on a rail, stamped READY or NEEDS 2; short lists are chalkboards; numbers sit on a board. Steel gray, ticket white, black, and tomato red, with Barlow Condensed for headings and IBM Plex Mono and Sans for the rest.
+- **Accessible.** WCAG AA color contrast (checked by tests), keyboard focus, screen-reader labels, and color never used alone (every colored corner has a stamp in words).
 
 More detail: [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) explains every part of the code and every library, [docs/GLOSSARY.md](docs/GLOSSARY.md) defines every term, and [docs/CHANGES.md](docs/CHANGES.md) tells the story change by change.
 
 ## How this was built
 
-I designed and directed Slice'd, and used [Claude Code](https://claude.com/claude-code) as an AI coding tool to write much of the implementation (the commits credit it as a co-author). The project and its decisions are mine: what Slice'd is for (ingredient-aware cooking, not another recipe social network), the product framework and which features to build, cut, or shrink, what the recipe colors mean, keeping personal data private and local, holding off on paid AI until the end, and the cookbook-style design. I reviewed and tested every change, including in Safari, and I can walk through any part of the code. The whole process, including the decisions and the bugs, is in [docs/CHANGES.md](docs/CHANGES.md).
+I designed and directed Slice'd, and used [Claude Code](https://claude.com/claude-code) as an AI coding tool to write much of the implementation (the commits credit it as a co-author). The project and its decisions are mine: what Slice'd is for (ingredient-aware cooking, not another recipe social network), the product framework and which features to build, cut, or shrink, what the recipe colors mean, keeping personal data private and local, holding off on paid AI until the end, and the kitchen-line design. I reviewed and tested every change, including in Safari, and I can walk through any part of the code. The whole process, including the decisions and the bugs, is in [docs/CHANGES.md](docs/CHANGES.md).
 
 ## Running locally
 
@@ -189,7 +190,7 @@ sliced/
 │   │   ├── config.py     # settings from environment variables
 │   │   └── main.py       # creates the FastAPI app, error handlers
 │   └── tests/
-├── frontend/             # HTML pages, css/, js/, fonts/ (Newsreader, self-hosted)
+├── frontend/             # HTML pages, css/, js/, fonts/ (Barlow Condensed, IBM Plex, self-hosted)
 ├── docs/                 # walkthrough, product direction, Reminders Shortcut, screenshots
 ├── .github/workflows/    # runs the tests on every push
 ├── data/                 # seed_recipes.json, seed_inventory.json + SQLite database (db not committed)

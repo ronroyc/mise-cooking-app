@@ -77,31 +77,34 @@ function hasOtherFilters() {
 function renderCard(recipe, byMatch) {
   const li = document.createElement("li");
   li.className = "recipe-card";
-  const cover = recipeCover(recipe, recipe.match, () => layoutCard(li));
+  colorTicket(li, recipe.match);
+  const cover = recipeCover(recipe, () => layoutCard(li));
 
   const body = document.createElement("div");
   body.className = "recipe-card-body";
+
+  // Ticket header: what it is and how long, then how many it serves.
+  const head = document.createElement("p");
+  head.className = "ticket-head";
+  const what = document.createElement("span");
+  what.textContent = [recipe.cuisine, formatMinutes(recipe.total_time)].filter(Boolean).join(" · ");
+  const serves = document.createElement("span");
+  serves.textContent = `Serves ${recipe.servings}`;
+  head.append(what, serves);
+
   const heading = document.createElement("h2");
   const link = document.createElement("a");
   link.href = `/recipe.html?id=${recipe.id}`;
   link.textContent = recipe.title;
   heading.append(link);
+  body.append(head, heading, matchLine(recipe.match, byMatch));
 
-  const cooked = recipe.times_cooked
-    ? `Cooked ${recipe.times_cooked === 1 ? "once" : `${recipe.times_cooked} times`}` +
-      (recipe.average_rating !== null ? `, rated ${recipe.average_rating}` : "")
-    : null;
-  const meta = document.createElement("p");
-  meta.className = "label card-meta";
-  meta.textContent = [recipe.cuisine, formatMinutes(recipe.total_time), `Serves ${recipe.servings}`]
-    .filter(Boolean)
-    .join(" · ");
-  body.append(heading, meta, matchLine(recipe.match, byMatch));
-  if (cooked) {
-    const cookedEl = document.createElement("p");
-    cookedEl.className = "hint";
-    cookedEl.textContent = cooked;
-    body.append(cookedEl);
+  if (recipe.times_cooked) {
+    const cooked = document.createElement("p");
+    cooked.className = "hint";
+    cooked.textContent = `Cooked ${recipe.times_cooked === 1 ? "once" : `${recipe.times_cooked} times`}` +
+      (recipe.average_rating !== null ? `, rated ${recipe.average_rating}` : "");
+    body.append(cooked);
   }
   if (recipe.description) {
     const description = document.createElement("p");
@@ -114,7 +117,7 @@ function renderCard(recipe, byMatch) {
     if (!recipe.pinned && filtersForm.elements.show.value === "pinned") loadRecipes();
   }));
 
-  li.append(cover, body);
+  li.append(...(cover ? [cover] : []), body, recipeStamp(recipe.match));
   return li;
 }
 

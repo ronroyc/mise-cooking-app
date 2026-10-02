@@ -100,10 +100,10 @@ def test_text_colors_meet_wcag_aa(foreground, background):
 
 
 @pytest.mark.parametrize("corner", ["have-all", "have-half", "have-few"])
-def test_corner_colors_are_visible(corner):
+def test_stamp_colors_are_visible(corner):
     # WCAG 1.4.11: shapes that carry meaning need 3:1 against what's next to them.
     tokens = _color_tokens()
-    for background in ["surface", "bg"] + [f"cover-{n}" for n in range(1, 7)]:
+    for background in ["surface"]:  # stamps sit on white ticket paper
         ratio = _contrast(tokens[corner], tokens[background])
         assert ratio >= 3, f"--{corner} on --{background} is {ratio:.2f}:1"
 

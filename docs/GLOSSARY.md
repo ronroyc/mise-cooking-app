@@ -315,7 +315,7 @@ Prevented by `textContent`.
 and the favicon are SVG.
 
 **Web font / @font-face / woff2.** A font file the page loads, declared with `@font-face`.
-woff2 is the compressed format. Slice'd serves Newsreader itself.
+woff2 is the compressed format. Slice'd serves its fonts itself.
 
 **Favicon.** The little icon in the browser tab (`favicon.svg`).
 
@@ -357,11 +357,13 @@ fact in words.
 **Design system.** The shared set of tokens, components, and rules that keep every page
 consistent.
 
-**Serif / sans-serif.** Fonts with and without small strokes at letter ends. Headings use a
-serif (Newsreader), body text a sans-serif (the system font).
+**Serif / sans-serif / monospace / condensed.** Fonts with and without small strokes at
+letter ends; monospace fonts give every letter the same width (like a receipt printer);
+condensed fonts are narrow. Slice'd uses a condensed sans (Barlow Condensed) for headings, a
+monospace (IBM Plex Mono) for ticket details, and a sans (IBM Plex Sans) for reading.
 
-**Editorial design.** A print-inspired look: strong type, rules, and whitespace instead of
-boxes. The "cookbook" direction.
+**Design concept.** The idea a whole look grows from. Slice'd's is a restaurant kitchen line:
+order tickets, stamps, chalkboards, a rail.
 
 **Rule (in design).** A thin line separating content.
 
@@ -559,7 +561,8 @@ otherwise.
 
 **Use soon.** Inventory items expiring within 3 days.
 
-**Corner color.** Green, yellow, or red on each recipe card, from coverage.
+**Corner color and stamp.** Green, mustard, or red on each recipe ticket, from coverage,
+with a READY or NEEDS stamp saying the same in words.
 
 **Score / reasons.** The 0 to 100 recommendation number and the plain-words explanation.
 
