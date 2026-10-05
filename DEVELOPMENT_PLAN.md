@@ -90,7 +90,7 @@ After the build order:
 - [x] **M0: Project foundation.** Structure, FastAPI app, frontend shell, SQLite config, Git, README, `.env.example`, health endpoint
 - [x] **M1: Recipe system.** Database models, recipe CRUD API, basic recipe UI, seed data
 - [x] **M2: Inventory.** Inventory model, API, UI, expiration tracking
-- [x] **M3: Core intelligence.** Ingredient normalization, unit conversion, recipe scaling, ingredient matching
+- [x] **M3: Matching, units, and scaling.** Ingredient normalization, unit conversion, recipe scaling, ingredient matching
 - [x] **M4: Recommendations.** Deterministic scoring, recommendation UI, score explanations
 - [x] **M5: Grocery + history.** Grocery list, cooking history, ratings
 - [x] **M6: AI.** Substitution assistant, graceful failure handling (the Anthropic integration itself landed early, with ingredient recognition in M2). Real-API test still waits for the key at the end.
@@ -141,7 +141,7 @@ After the build order:
 - `privacy.html` updated to say exactly what's sent and when.
 - 120 tests. AI tests use a fake client, so they never call the real API. An offline request build confirmed the SDK produces the expected model, schema, effort, and fallback settings. **Not yet tried against the real API** (no key in `.env` yet) and not yet clicked through in a browser.
 
-### M3: Core intelligence
+### M3: Matching, units, and scaling
 - **Name matching** (`services/names.py`): `match_key()` turns a name into a comparison key: lowercase, no punctuation or hyphens, a few descriptor words dropped ("fresh", "large"), last word made singular, then a small synonym table ("scallion" -> "green onion", "garbanzo bean" -> "chickpea"). Two names are the same ingredient when their keys are equal. Stored names don't change.
 - `find_ingredient()` looks up by exact name, then by key, so adding "Eggs" to a recipe or the inventory reuses the existing "egg" row. A recipe listing "egg" and "eggs" is rejected with a readable 422. A deliberate rename ("scallion" -> "green onion" on an inventory item) keeps the new spelling.
 - The AI lookup (`/ingredients/identify`) uses the same lookup, so plurals and known synonyms never cost an AI call. The inventory form says "Slice'd already knows this as egg" and, after saving, "Saved as egg".
@@ -278,7 +278,7 @@ Not planned, just ideas from Sep 25, 2026 so they aren't lost. Only relevant if 
 - Payments (e.g. Stripe)
 - Proper Terms and Privacy pages; per-user AI usage limits so costs can't run away
 
-**Competition:** Paprika, Mealime, SuperCook, Samsung Food. Slice'd's angle: ingredient-aware recommendations plus AI that understands niche and cultural ingredients.
+**Competition:** Paprika, Mealime, SuperCook, Samsung Food. Slice'd's angle: recommendations based on what's already in your kitchen, plus AI that understands niche and cultural ingredients.
 
 ## Lessons learned
 

@@ -66,7 +66,7 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
   Also saved: ideas for making Slice'd a product someday (freemium AI tier, grocery partnerships,
   no ads or data selling).
 
-### Core intelligence (Milestone 3)
+### Matching, units, and scaling (Milestone 3)
 - **Name matching:** `match_key()` so "Eggs" is "egg" and "scallions" is "green onion".
 - **Units:** cleaned on input, converted within volume or weight, never between them (that
   would need each ingredient's density).
@@ -183,7 +183,7 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
   versus the recipe collection's average, compared by cosine
   similarity, worth up to 10 points. Ingredients went from 80 to 70 points so the total stays
   100.
-- **A test that taught something:** Garlic Bread didn't count as a taste match even though
+- **A test that was wrong:** Garlic Bread didn't count as a taste match even though
   Garlic Noodles were rated highly. It's buttery and creamy, not salty and savory. The math was right; the
   test was wrong.
 - **Demo mode:** a separate sample database for screenshots and public demos.
@@ -214,7 +214,7 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
 
 ---
 
-## Oct 2: a design with a concept
+## Oct 2: the kitchen-line redesign
 
 - **Why:** the cookbook look (cream paper, a book serif, a terracotta accent) read as
   generic. It's the default style AI tools produce, so the app looked machine-made even

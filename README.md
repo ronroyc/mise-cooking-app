@@ -2,34 +2,34 @@
 
 [![Tests](https://github.com/ronroyc/sliced/actions/workflows/tests.yml/badge.svg)](https://github.com/ronroyc/sliced/actions/workflows/tests.yml)
 
-**What should I cook with what I already have?**
+Slice'd is a cooking app I built to answer one question: what can I make with what's already in my kitchen?
 
-Slice'd is a cooking app built around one idea: *ingredient-aware recipe discovery*. It compares your recipes against what's actually in your kitchen, shows what you can cook tonight and what you're missing, learns what you like from your ratings, and turns the rest into a grocery list.
+You keep track of what's in your pantry, fridge, and freezer, and Slice'd checks every recipe against it. It shows what you can cook tonight, what you're missing, and what's about to go bad. Rate what you cook and it picks up what you like. Whatever you're short on goes on a grocery list.
 
 ![The Slice'd home page: a large headline, four kitchen numbers, tonight's three recipe picks with covers and reasons, and a numbered list of the next recipes](docs/screenshots/home.png)
 
-## What it does
+## Features
 
-**Your kitchen, matched against your recipes**
-- **Inventory** for pantry, fridge, and freezer, with amounts and expiration dates.
-- **Ingredient matching** on every recipe: have, not enough, expired, or missing. "Eggs" matches "egg", "scallions" match "green onion", and 2 cups compares with 1 tbsp.
-- **Every recipe is an order ticket** with a colored corner and a rubber stamp: green READY (you have everything), mustard NEEDS 2 (at least half), red NEEDS 5 (less than half).
-- **Recipe scaling** with kitchen fractions and unit conversion (6 tsp becomes 2 tbsp).
+### Your kitchen and your recipes
+- An inventory for the pantry, fridge, and freezer, with amounts and expiration dates.
+- Every recipe is checked against the inventory, one ingredient at a time: have it, not enough, expired, or missing. Slice'd knows "eggs" and "egg" are the same thing, that scallions are green onions, and how to compare 2 cups with 1 tbsp.
+- Recipes look like order tickets with a stamp: green READY if you have everything, mustard NEEDS 2 if you have at least half, red NEEDS 5 if you have less than half.
+- Scale any recipe up or down. Amounts convert and show as kitchen fractions, so 6 tsp becomes 2 tbsp.
 
-**Deciding what to cook**
-- **Explainable recommendations.** Every recipe gets a score out of 100, with the reasons in plain words: up to 70 points for the ingredients you have, 20 for using food before it expires, and 10 for fitting your taste.
-- **Taste learned from ratings.** The meals you rate 4 or 5 are compared with your whole recipe collection to find what you lean toward (for example salty and savory), and similar recipes rank higher: "Fits your taste: salty and umami."
-- **Substitutions.** About 60 classic swaps, checked against your kitchen ("Swap: use your linguine, same amount"). An optional AI assistant covers anything else.
-- **Profile.** Stats, a hand-drawn radar chart of your flavor profile, your most-used ingredients, and "Slice'd knows..." observations that only appear when the numbers back them up.
+### Picking what to cook
+- Each recipe gets a score out of 100, and you can see where the points came from: up to 70 for ingredients you have, 20 for using food before it expires, and 10 for matching your taste.
+- Your taste comes from your ratings. Slice'd looks at the meals you rated 4 or 5, works out what they have in common (salty and savory, say), and moves similar recipes up the list.
+- About 60 common substitutions, checked against what you have ("Swap: use your linguine, same amount"). With an API key added, you can also ask AI for ideas.
+- A profile page with your stats, a flavor chart, the ingredients you use most, and a few notes about how you cook. A note only shows up once there's enough data to back it.
 
-**Planning and shopping**
-- **Meal prep.** Pick several recipes: Slice'd adds up what they need *together*, checks your kitchen once, and lists what to prep in one go ("Cook 13 cups rice once").
-- **Grocery list** grouped by store section, which fills itself from recipes, combines amounts, moves bought items into the inventory, and shares to your phone.
-- **Cooking history and leftovers.** Log a meal, rate it, take what you used out of the inventory, and save leftovers to the fridge with a 4-day date.
+### Planning and shopping
+- Meal prep: pick a few recipes for the week and Slice'd adds up everything they need, checks it against your kitchen, and tells you what you can prep once for all of them ("Cook 13 cups rice once").
+- A grocery list sorted by store section. Add what's missing from any recipe, and amounts of the same thing get combined. After shopping, checked items move into your inventory. You can also send the list to your phone.
+- Cooking history. Log a meal, rate it, take what you used out of the inventory, and put leftovers in the fridge with a 4-day date.
 
-**Getting recipes in**
-- **Import from recipe websites** by reading the recipe data they publish (schema.org JSON-LD) and parsing each ingredient line into amount, unit, name, and note, with plain code and no AI. For sites that block apps, a "Save to Slice'd" Safari bookmark reads the recipe from the page you're on.
-- **Photos** you upload, or the site's photo for imported recipes, on a Pinterest-style grid.
+### Adding recipes
+- Paste a link and Slice'd imports the recipe. Most recipe sites publish their recipes in a standard format (schema.org JSON-LD); Slice'd reads it and splits each ingredient line into amount, unit, and name, without AI. For sites that block this, a "Save to Slice'd" bookmark in Safari grabs the recipe from the page you're on.
+- Add your own photos, or keep the one from the recipe site.
 
 ## Screenshots
 
@@ -41,7 +41,7 @@ Slice'd is a cooking app built around one idea: *ingredient-aware recipe discove
 | **Inventory** | **Grocery list** |
 | ![The inventory as ruled lists by fridge, freezer, and pantry](docs/screenshots/inventory.png) | ![The grocery list by store section](docs/screenshots/grocery.png) |
 
-Every page works on a phone: [home page on a phone](docs/screenshots/home-phone.png). The screenshots use the demo data (see below).
+It works on a phone too: [home page on a phone](docs/screenshots/home-phone.png). The screenshots use the demo data (see below).
 
 ## How it's built
 
@@ -60,17 +60,17 @@ Browser ──HTTP──▶ FastAPI (one server)
                    └── /*       → static frontend files (frontend/)
 ```
 
-Design decisions worth knowing:
-- **Deterministic first.** Matching, units, scoring, taste, flavors, meal prep, and the recipe importer are plain code, so the same kitchen always gives the same answer and every number can be explained. AI is only used where rules can't work (identifying an unfamiliar ingredient, creative substitutions), and the app works fully without it.
-- **Private by default.** Everything lives in one SQLite file and a photos folder on your computer. Fonts are served by Slice'd itself, so pages make no outside requests.
-- **A design with a concept.** The interface is a restaurant kitchen line: recipes are order tickets on a rail, stamped READY or NEEDS 2; short lists are chalkboards; numbers sit on a board. Steel gray, ticket white, black, and tomato red, with Barlow Condensed for headings and IBM Plex Mono and Sans for the rest.
-- **Accessible.** WCAG AA color contrast (checked by tests), keyboard focus, screen-reader labels, and color never used alone (every colored corner has a stamp in words).
+A few choices behind it:
+- Most of Slice'd is plain code, not AI. Matching, unit conversion, scoring, taste, meal prep, and importing all follow fixed rules, so the same kitchen always gives the same results and every number can be traced back. AI only handles two things rules can't: identifying an ingredient Slice'd has never seen, and suggesting less obvious swaps. The app works fine without it.
+- Your data stays on your computer, in one SQLite file and a photos folder. The fonts are bundled too, so pages don't load anything from the internet.
+- The app looks like a restaurant kitchen line, the place where every slice gets prepped: recipes are tickets on a rail, short lists are chalkboards, and numbers sit on a board. The colors are steel gray, white, black, and tomato red. Headings use Barlow Condensed and the rest uses IBM Plex Mono and IBM Plex Sans.
+- Text meets WCAG AA contrast (tests check it), everything works from the keyboard, and screen readers get labels. Color is never the only signal: every colored corner also has a stamp in words.
 
-More detail: [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) explains every part of the code and every library, [docs/GLOSSARY.md](docs/GLOSSARY.md) defines every term, and [docs/CHANGES.md](docs/CHANGES.md) tells the story change by change.
+For more, [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) goes through the code and the libraries, [docs/GLOSSARY.md](docs/GLOSSARY.md) explains the terms, and [docs/CHANGES.md](docs/CHANGES.md) lists every change in order.
 
-## How this was built
+## How I made it
 
-I designed and directed Slice'd, and used [Claude Code](https://claude.com/claude-code) as an AI coding tool to write much of the implementation. The project and its decisions are mine: what Slice'd is for (ingredient-aware cooking, not another recipe social network), the product framework and which features to build, cut, or shrink, what the recipe colors mean, keeping personal data private and local, holding off on paid AI until the end, and the kitchen-line design. I reviewed and tested every change, including in Safari, and I can walk through any part of the code. The whole process, including the decisions and the bugs, is in [docs/CHANGES.md](docs/CHANGES.md).
+I designed Slice'd and made the calls on what it's for, which features to build and which to cut, how recipes are scored and colored, keeping data on your own computer, and how it looks. I used [Claude Code](https://claude.com/claude-code), an AI coding tool, to write much of the code, and I reviewed and tested every change, including in Safari. [docs/CHANGES.md](docs/CHANGES.md) covers how it came together, bugs included.
 
 ## Running locally
 
@@ -102,6 +102,21 @@ cd backend
 python -m app.database.demo ../data/demo.db
 DATABASE_URL=sqlite:///../data/demo.db uvicorn app.main:app --port 8001
 ```
+
+### On Windows
+
+Install Python from [python.org](https://www.python.org/downloads/) (tick "Add python.exe to PATH"), download the repo as a ZIP from the green Code button, unzip it, and open PowerShell in that folder:
+
+```powershell
+py -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+cd backend
+..\.venv\Scripts\python -m app.database.demo ..\data\demo.db
+$env:DATABASE_URL="sqlite:///../data/demo.db"
+..\.venv\Scripts\python -m uvicorn app.main:app --port 8001
+```
+
+Then open http://127.0.0.1:8001.
 
 ## Database
 
