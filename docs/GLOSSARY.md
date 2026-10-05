@@ -433,8 +433,11 @@ project plus its history.
 
 **noreply email.** A private address GitHub gives you so commits don't show your real email.
 
-**Rewriting history.** Changing past commits (done once, to switch the email, before
-anything was pushed).
+**Rewriting history.** Changing past commits. Done twice: to switch the email before
+anything was pushed, and later to remove co-author lines from the published commits.
+
+**Force push.** Replacing the history on GitHub with a rewritten local one. Safe only when
+no one else has a copy of the old history.
 
 **GitHub CLI (`gh`).** GitHub's command-line tool; used to create the repo.
 

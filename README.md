@@ -70,7 +70,7 @@ More detail: [docs/WALKTHROUGH.md](docs/WALKTHROUGH.md) explains every part of t
 
 ## How this was built
 
-I designed and directed Slice'd, and used [Claude Code](https://claude.com/claude-code) as an AI coding tool to write much of the implementation (the commits credit it as a co-author). The project and its decisions are mine: what Slice'd is for (ingredient-aware cooking, not another recipe social network), the product framework and which features to build, cut, or shrink, what the recipe colors mean, keeping personal data private and local, holding off on paid AI until the end, and the kitchen-line design. I reviewed and tested every change, including in Safari, and I can walk through any part of the code. The whole process, including the decisions and the bugs, is in [docs/CHANGES.md](docs/CHANGES.md).
+I designed and directed Slice'd, and used [Claude Code](https://claude.com/claude-code) as an AI coding tool to write much of the implementation. The project and its decisions are mine: what Slice'd is for (ingredient-aware cooking, not another recipe social network), the product framework and which features to build, cut, or shrink, what the recipe colors mean, keeping personal data private and local, holding off on paid AI until the end, and the kitchen-line design. I reviewed and tested every change, including in Safari, and I can walk through any part of the code. The whole process, including the decisions and the bugs, is in [docs/CHANGES.md](docs/CHANGES.md).
 
 ## Running locally
 

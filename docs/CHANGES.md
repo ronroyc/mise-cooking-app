@@ -231,3 +231,13 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
 - **Fixes along the way:** the colored corners briefly disappeared mid-redesign (styles
   changed before the scripts); ticket headers ran under the corner; clips floated between
   grid rows. The tomato red and green were checked for contrast on the steel background.
+
+---
+
+## Oct 4: commit messages
+
+- **What:** removed the `Co-Authored-By` lines from the two published commits, so Claude
+  Code no longer appears in the repo's contributors list. The README still names it as the
+  AI coding tool used to build Slice'd.
+- **How:** rewrote the commit messages and force-pushed. Rewriting published history is
+  normally risky, but here no one else had cloned the repo.
