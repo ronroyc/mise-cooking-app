@@ -99,7 +99,7 @@ function renderPick(rec, n) {
   const no = document.createElement("span");
   no.textContent = `#${number(n)} · ${rec.recipe.cuisine || "Recipe"}`;
   const time = document.createElement("span");
-  time.textContent = formatMinutes(rec.recipe.total_time);
+  time.textContent = recipeTime(rec.recipe);
   head.append(no, time);
 
   const heading = document.createElement("h3");
@@ -141,7 +141,7 @@ function renderIndexRow(rec, n) {
   title.append(recipeLink(rec));
   const meta = document.createElement("span");
   meta.className = "label index-meta";
-  meta.textContent = [rec.recipe.cuisine, formatMinutes(rec.recipe.total_time)].filter(Boolean).join(" · ");
+  meta.textContent = [rec.recipe.cuisine, recipeTime(rec.recipe)].filter(Boolean).join(" · ");
   title.append(meta);
   const have = document.createElement("span");
   have.className = `index-have match-${rec.color}`;

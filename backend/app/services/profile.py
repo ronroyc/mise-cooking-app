@@ -18,6 +18,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import CookingLog, Recipe
+from app.services import recipes as recipe_service
 from app.services import taste
 from app.services.flavors import FLAVORS, LABELS, level, recipe_flavor
 from app.services.matching import STAPLES
@@ -118,8 +119,9 @@ def _observations(logs, flavors_by_log) -> list:
         return found
 
     # Quick recipes vs longer ones, when both have at least 2 rated meals and differ by half a star.
-    quick = [log.rating for log, _ in rated if log.recipe.total_time <= QUICK_MINUTES]
-    slow = [log.rating for log, _ in rated if log.recipe.total_time > QUICK_MINUTES]
+    timed = [log for log, _ in rated if log.recipe.time_status != "unknown"]
+    quick = [log.rating for log in timed if log.recipe.total_time <= QUICK_MINUTES]
+    slow = [log.rating for log in timed if log.recipe.total_time > QUICK_MINUTES]
     if len(quick) >= 2 and len(slow) >= 2:
         q, s = sum(quick) / len(quick), sum(slow) / len(slow)
         if abs(q - s) >= 0.5:
@@ -148,10 +150,16 @@ def _observations(logs, flavors_by_log) -> list:
     return found[:MAX_OBSERVATIONS]
 
 
+def _average_minutes(logs) -> Optional[int]:
+    # Recipes with no times at all would pull the average toward 0.
+    minutes = [log.recipe.total_time for log in logs if log.recipe.time_status != "unknown"]
+    return round(sum(minutes) / len(minutes)) if minutes else None
+
+
 def build_profile(db: Session, today: Optional[date] = None) -> dict:
     all_logs = list(db.scalars(select(CookingLog).order_by(CookingLog.cooked_on, CookingLog.id)))
     logs = [log for log in all_logs if log.recipe is not None]  # deleted recipes have no ingredients left
-    recipes = list(db.scalars(select(Recipe).order_by(Recipe.id)))
+    recipes = list(db.scalars(select(Recipe).options(*recipe_service.WITH_DETAILS).order_by(Recipe.id)))
     pinned = [r for r in recipes if r.pinned_at is not None]
     ratings = [log.rating for log in all_logs if log.rating]
 
@@ -177,7 +185,7 @@ def build_profile(db: Session, today: Optional[date] = None) -> dict:
             "recipes_pinned": len(pinned),
             "meals_rated": len(ratings),
             "average_rating": _average(ratings),
-            "average_minutes": round(sum(log.recipe.total_time for log in logs) / len(logs)) if logs else None,
+            "average_minutes": _average_minutes(logs),
             "top_cuisine": {"name": top_cuisine[0], "meals": top_cuisine[1]} if top_cuisine else None,
         },
         "flavor": flavor,

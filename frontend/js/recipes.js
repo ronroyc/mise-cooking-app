@@ -87,9 +87,9 @@ function renderCard(recipe, byMatch) {
   const head = document.createElement("p");
   head.className = "ticket-head";
   const what = document.createElement("span");
-  what.textContent = [recipe.cuisine, formatMinutes(recipe.total_time)].filter(Boolean).join(" · ");
+  what.textContent = [recipe.cuisine, recipeTime(recipe)].filter(Boolean).join(" · ");
   const serves = document.createElement("span");
-  serves.textContent = `Serves ${recipe.servings}`;
+  serves.textContent = servesText(recipe);
   head.append(what, serves);
 
   const heading = document.createElement("h2");
@@ -139,20 +139,26 @@ function matchLine(match, byMatch) {
 // so cards of different heights pack into columns instead of leaving holes, while
 // the list keeps its order for screen readers and the keyboard.
 
-function layoutCard(card) {
+// Measure every card first, then set every span. Alternating the two makes the browser
+// redo the page layout once per card: with 800 recipes that took several seconds.
+function layoutCards(cards) {
   const gap = parseFloat(getComputedStyle(listEl).columnGap) || 0;
-  card.style.gridRowEnd = `span ${Math.ceil(card.getBoundingClientRect().height + gap)}`;
+  const heights = cards.map((card) => card.getBoundingClientRect().height);
+  cards.forEach((card, i) => {
+    card.style.gridRowEnd = `span ${Math.ceil(heights[i] + gap)}`;
+  });
 }
 
+const layoutCard = (card) => layoutCards([card]);
+
 // Cards change height when the window resizes (text wraps) or a photo loads.
-const cardResizes = new ResizeObserver((entries) => entries.forEach((entry) => layoutCard(entry.target)));
+const cardResizes = new ResizeObserver((entries) => layoutCards(entries.map((entry) => entry.target)));
 
 function layoutGrid() {
   cardResizes.disconnect();
-  for (const card of listEl.children) {
-    layoutCard(card);
-    cardResizes.observe(card);
-  }
+  const cards = [...listEl.children];
+  layoutCards(cards);
+  cards.forEach((card) => cardResizes.observe(card));
 }
 
 // Search as you type, but wait until typing pauses for 250ms.

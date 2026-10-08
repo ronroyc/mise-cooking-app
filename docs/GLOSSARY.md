@@ -249,6 +249,11 @@ for full migrations.
 **SQL injection.** An attack where typed text is run as SQL. Using an ORM with parameters
 prevents it.
 
+**N+1 queries.** One query for a list, then one more query per item in it: 1 for 800
+recipes, plus 800 for their ingredients. Fast with 20 rows, slow with 800. The app's fix is
+`selectinload` (`recipes.WITH_DETAILS`), which loads the ingredients of every recipe in the
+list in one extra query.
+
 ---
 
 ## 4. Frontend: HTML, CSS, JavaScript
@@ -280,6 +285,11 @@ elements, the property sets one style.
 
 **Masonry layout.** Cards of different heights packed into columns (the Pinterest look).
 Slice'd builds it with 1px grid rows and row spans.
+
+**Layout thrashing.** Reading a size (`getBoundingClientRect`) right after changing the page
+makes the browser recalculate the whole layout first. Doing read, change, read, change for
+800 cards meant 800 recalculations. The fix is to read everything, then change everything
+(`layoutCards()` in `recipes.js`).
 
 **Media query.** CSS that applies only at some screen sizes: `@media (max-width: 40rem)`
 for phones.

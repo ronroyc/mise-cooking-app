@@ -195,7 +195,8 @@ def test_add_missing_columns_to_old_database(tmp_path):
 
     added = add_missing_columns(engine)
 
-    assert sorted(added) == ["recipes.photo_filename", "recipes.pinned_at", "recipes.source_url"]
+    assert sorted(added) == ["recipes.photo_filename", "recipes.pinned_at", "recipes.servings_estimated",
+                             "recipes.source_url", "recipes.time_status"]
     columns = {c["name"] for c in inspect(engine).get_columns("recipes")}
     assert {"pinned_at", "photo_filename"} <= columns
     with engine.connect() as connection:

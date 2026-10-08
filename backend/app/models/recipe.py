@@ -33,6 +33,11 @@ class Recipe(Base):
     pinned_at: Mapped[Optional[datetime]] = mapped_column(DateTime)  # None = not pinned
     photo_filename: Mapped[Optional[str]] = mapped_column(String(100))  # in data/photos (services/photos.py)
     source_url: Mapped[Optional[str]] = mapped_column(String(500))  # the website it was imported from
+    # For recipes whose source gave no times or servings (TheMealDB, services/mealdb.py):
+    # time_status None = times as written, "estimated" = added up from the steps,
+    # "unknown" = no times anywhere (left out of time filters).
+    time_status: Mapped[Optional[str]] = mapped_column(String(20))
+    servings_estimated: Mapped[Optional[bool]]  # True = servings is a guess
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now, onupdate=utc_now)
 

@@ -16,6 +16,7 @@ from typing import Optional
 ALIASES = {
     "teaspoon": "tsp", "teaspoons": "tsp", "tsp": "tsp", "tsps": "tsp", "t": "tsp",
     "tablespoon": "tbsp", "tablespoons": "tbsp", "tbsp": "tbsp", "tbsps": "tbsp", "tbs": "tbsp", "tbl": "tbsp",
+    "tbls": "tbsp", "tblsp": "tbsp",
     "cup": "cup", "cups": "cup", "c": "cup",
     "fluid ounce": "fl oz", "fluid ounces": "fl oz", "fl oz": "fl oz", "fl. oz": "fl oz", "fl. oz.": "fl oz",
     "pint": "pint", "pints": "pint", "pt": "pint",

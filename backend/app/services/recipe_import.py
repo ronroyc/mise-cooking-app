@@ -290,15 +290,38 @@ def _starts_note(text: str) -> bool:
     return first in NOTE_WORDS or first.endswith(("ed", "ly"))
 
 
-def parse_ingredient_line(line: str) -> dict:
-    """'1 1/2 cups all-purpose flour, sifted' ->
-    {"name": "all-purpose flour", "quantity": 1.5, "unit": "cup", "preparation_note": "sifted", "optional": False}
-    """
+def _clean_fractions(line: str) -> str:
     text = clean_text(line)
     for symbol, fraction in UNICODE_FRACTIONS.items():
         text = re.sub(rf"(\d)\s*{symbol}", rf"\1 {fraction}", text)  # "1½" -> "1 1/2"
         text = text.replace(symbol, fraction)
-    text = text.replace("⁄", "/").lstrip("-•* ").strip()
+    return text.replace("⁄", "/").lstrip("-•* ").strip()
+
+
+def parse_amount(text: str) -> tuple:
+    """(quantity, unit, the rest) from an amount written on its own, for sources that
+    keep the amount apart from the name: '1 1/2 cups' -> (1.5, 'cup', ''),
+    '100g' -> (100.0, 'g', ''), '2 cloves minced' -> (2.0, 'clove', 'minced'),
+    'Pinch' -> (None, None, 'Pinch'). A range buys for the top: '2-3' -> 3."""
+    text = re.sub(r"([a-zA-Z])\s*/\s*(\d)", r"\1 / \2", _clean_fractions(text))  # "85g/3oz"
+    match = QUANTITY.match(text)
+    if not match:
+        return None, None, text
+    low = _number(match.group(1))
+    high = _number(match.group(2)) if match.group(2) else None
+    quantity = high if high and high > low else low
+    unit, rest = _unit_at_start(text[match.end():])
+    if quantity <= 0 or quantity > 10000:
+        return None, None, text
+    rest = re.sub(r"^/\s*[\d./ ]+\s*[a-zA-Z]+\.?\s*", "", rest)  # the same amount again: "/ 3oz"
+    return quantity, unit, re.sub(r"^of\s+", "", rest, flags=re.IGNORECASE).strip(" ,")
+
+
+def parse_ingredient_line(line: str) -> dict:
+    """'1 1/2 cups all-purpose flour, sifted' ->
+    {"name": "all-purpose flour", "quantity": 1.5, "unit": "cup", "preparation_note": "sifted", "optional": False}
+    """
+    text = _clean_fractions(line)
     text = re.sub(r"([a-zA-Z])\s*/\s*(\d)", r"\1 / \2", text)  # "200g/6oz" -> "200g / 6oz"
 
     notes = []
@@ -384,29 +407,38 @@ def _split_salt_and_pepper(item: dict) -> list:
 
 
 def parse_ingredients(lines: list) -> tuple:
-    """(ingredients, warnings). Merges an ingredient listed twice (salt for the dough
-    and salt for the filling), since a recipe lists each ingredient once in Slice'd."""
-    ingredients, warnings, by_key = [], [], {}
+    """(ingredients, warnings) from free-text ingredient lines."""
+    items, warnings = [], []
     for line in lines:
         original = clean_text(line)
         if not original:
             continue
-        for item in _split_salt_and_pepper(parse_ingredient_line(original)):
-            if not item["name"]:
-                warnings.append(f"Skipped \"{original}\": couldn't find an ingredient name.")
-                continue
-            key = match_key(normalize_name(item["name"]))
-            if key not in by_key:
-                by_key[key] = item
-                ingredients.append(item)
-                continue
-            first = by_key[key]
-            added = (units.convert(item["quantity"], item["unit"], first["unit"])
-                     if first["quantity"] and item["quantity"] else None)
-            if added is not None:
-                first["quantity"] = round(first["quantity"] + added, 4)
-            elif first["quantity"] or item["quantity"]:
-                warnings.append(f"\"{item['name']}\" is listed more than once. Slice'd kept the first amount; check it.")
+        item = parse_ingredient_line(original)
+        if not item["name"]:
+            warnings.append(f"Skipped \"{original}\": couldn't find an ingredient name.")
+            continue
+        items.append(item)
+    ingredients, merge_warnings = merge_ingredients(items)
+    return ingredients, warnings + merge_warnings
+
+
+def merge_ingredients(items: list) -> tuple:
+    """(ingredients, warnings). Merges an ingredient listed twice (salt for the dough
+    and salt for the filling), since a recipe lists each ingredient once in Slice'd."""
+    ingredients, warnings, by_key = [], [], {}
+    for item in (split for item in items for split in _split_salt_and_pepper(item)):
+        key = match_key(normalize_name(item["name"]))
+        if key not in by_key:
+            by_key[key] = item
+            ingredients.append(item)
+            continue
+        first = by_key[key]
+        added = (units.convert(item["quantity"], item["unit"], first["unit"])
+                 if first["quantity"] and item["quantity"] else None)
+        if added is not None:
+            first["quantity"] = round(first["quantity"] + added, 4)
+        elif first["quantity"] or item["quantity"]:
+            warnings.append(f"\"{item['name']}\" is listed more than once. Slice'd kept the first amount; check it.")
     return ingredients, warnings
 
 

@@ -66,6 +66,17 @@ function formatMinutes(minutes) {
   return rest ? `${hours} hr ${rest} min` : `${hours} hr`;
 }
 
+// Some imported recipes only estimate their times and servings (TheMealDB lists neither):
+// "about 45 min", or "" when the recipe gives no times at all.
+function recipeTime(recipe, minutes = recipe.total_time) {
+  if (recipe.time_status === "unknown") return "";
+  return recipe.time_status === "estimated" ? `about ${formatMinutes(minutes)}` : formatMinutes(minutes);
+}
+
+function servesText(recipe) {
+  return `Serves ${recipe.servings_estimated ? "about " : ""}${recipe.servings}`;
+}
+
 // The API sends amounts ready to show (amount_text: "1 1/2 cups"), so fractions
 // and plurals are worked out in one place: backend/app/services/units.py.
 

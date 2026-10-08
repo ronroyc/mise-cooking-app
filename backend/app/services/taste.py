@@ -20,6 +20,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models import CookingLog, Recipe
+from app.services import recipes as recipe_service
 from app.services.flavors import FLAVORS, LABELS, recipe_flavor
 
 MIN_LIKED_MEALS = 3
@@ -55,7 +56,7 @@ def learn(db: Session) -> Optional[Taste]:
     ]
     if len(liked) < MIN_LIKED_MEALS:
         return None
-    recipes = list(db.scalars(select(Recipe)))
+    recipes = list(db.scalars(select(Recipe).options(*recipe_service.WITH_DETAILS)))
     baseline = _average([recipe_flavor(r.ingredients)["values"] for r in recipes])
     liked_average = _average([recipe_flavor(log.recipe.ingredients)["values"] for log in liked])
     lean = {f: liked_average[f] - baseline[f] for f in FLAVORS}

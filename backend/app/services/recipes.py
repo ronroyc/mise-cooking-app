@@ -7,13 +7,22 @@ and tested without going through HTTP.
 from typing import Optional
 
 from sqlalchemy import func, or_, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.models import Ingredient, Recipe, RecipeIngredient
 from app.models.recipe import utc_now
 from app.schemas.recipe import RecipeCreate, RecipeIngredientIn, RecipeOut, RecipeUpdate
 from app.services import units
 from app.services.names import match_key
+
+
+# For queries that read many recipes' ingredients or cooking history. Without it, each
+# recipe's ingredients are a separate query when first used ("N+1 queries"): with 800
+# recipes, the home page made over 4,000 queries. This loads them in three.
+WITH_DETAILS = (
+    selectinload(Recipe.ingredients).selectinload(RecipeIngredient.ingredient),
+    selectinload(Recipe.cook_logs),
+)
 
 
 def find_ingredient(db: Session, name: str) -> Optional[Ingredient]:
@@ -73,7 +82,7 @@ def list_recipes(
 ) -> list[Recipe]:
     # Sort by the lowercase title: SQLite puts "T" before "a" otherwise,
     # so "Chicken Teriyaki" would come before "Chicken and Vegetable Stir-Fry".
-    query = select(Recipe).order_by(func.lower(Recipe.title))
+    query = select(Recipe).options(*WITH_DETAILS).order_by(func.lower(Recipe.title))
 
     if search and search.strip():
         term = search.strip().lower()
@@ -92,6 +101,8 @@ def list_recipes(
         query = query.where(func.lower(Recipe.cuisine) == cuisine.strip().lower())
     if max_total_time is not None:
         query = query.where(Recipe.prep_time + Recipe.cook_time <= max_total_time)
+        # No times anywhere in the recipe: it isn't "quick", it's unknown.
+        query = query.where(or_(Recipe.time_status.is_(None), Recipe.time_status != "unknown"))
     if pinned_only:
         query = query.where(Recipe.pinned_at.is_not(None))
 
@@ -119,6 +130,12 @@ def create_recipe(db: Session, data: RecipeCreate) -> Recipe:
 def update_recipe(db: Session, recipe: Recipe, data: RecipeUpdate) -> Recipe:
     # exclude_unset: only touch fields the client actually sent.
     changes = data.model_dump(exclude_unset=True, exclude={"ingredients"})
+    # Typing in real times or servings replaces the estimate. The form sends every
+    # field, so only a changed value counts.
+    if any(field in changes and changes[field] != getattr(recipe, field) for field in ("prep_time", "cook_time")):
+        recipe.time_status = None
+    if "servings" in changes and changes["servings"] != recipe.servings:
+        recipe.servings_estimated = None
     for field, value in changes.items():
         setattr(recipe, field, value)
 

@@ -241,3 +241,37 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
   AI coding tool used to build Slice'd.
 - **How:** rewrote the commit messages and force-pushed. Rewriting published history is
   normally risky, but here no one else had cloned the repo.
+
+---
+
+## Oct 7: TheMealDB catalog
+
+- **Why:** recommendations can only be as good as the recipe library, and with about 20
+  recipes most kitchens matched nothing well. Options compared: TheMealDB (free, about 800
+  recipes, ingredients already split into amount and name), AI-generated recipes (costs money
+  and produces untested recipes; deferred with the other paid-AI work), and searching the web
+  live (no free search API; scraping breaks site terms). **Chosen:** TheMealDB, imported once
+  rather than searched live, so it works offline and every recipe gets a match color.
+- **What:** `services/mealdb.py` turns TheMealDB's format into Slice'd recipes and
+  `python -m app.database.mealdb` fetches the catalog (one request per first letter),
+  saves new recipes with their photos, and can remove them again (keeping pinned or cooked
+  ones). Amounts go through the same unit parsing as the URL importer (`parse_amount`,
+  split out of `parse_ingredient_line`); "Juice of 1" lemon, "To serve", "85g/3oz", and
+  "STEP 1" lines are handled; garnishes are optional so they don't block READY; country
+  names become cuisines ("France" → French).
+- **Missing data:** TheMealDB gives no times or servings. Decision: cook time is added up
+  from the times written in the steps, prep is 2 minutes per ingredient (at most 30), both
+  shown as "about"; recipes with no times in their steps (about 1 in 9) are "unknown" and
+  left out of the time filter and the quick-vs-slow observation. Servings are a guess of 4,
+  shown as "Serves about 4". Two new nullable columns (`time_status`,
+  `servings_estimated`) record this; typing real values on the form clears them.
+- **Performance, found by testing with 800 recipes:**
+  - The home page made over 4,000 database queries (each recipe's ingredients loaded
+    separately: the "N+1" problem). Batch loading with `selectinload` brought it to 48
+    queries and the request from 1.3 s to 0.4 s.
+  - The recipes page took 3.8 s to show the cards (8.9 s at phone width): the grid code
+    measured a card, then resized it, 800 times, and each measurement made the browser redo
+    the layout. Measuring every card first and then resizing them all brought it to under
+    1.2 s.
+- **Tests:** 45 new (amount parsing, time estimates, titles, cuisines, saving, removing,
+  the time filter, and edits clearing estimates); all 519 pass.

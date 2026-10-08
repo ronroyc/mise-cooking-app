@@ -81,6 +81,9 @@ After the build order:
   locally. Recipes without a photo are plain tickets rather than fake colored covers.
 - **Taste-based recommendations** (`services/taste.py`): the score became 70 (ingredients)
   + 20 (use soon) + 10 (taste), with taste learned from meals rated 4 or 5.
+- **TheMealDB catalog** (`services/mealdb.py`, `python -m app.database.mealdb`): about 800
+  free recipes imported in one go, with times estimated from the steps and marked "about".
+  Testing at that size found an N+1 query problem and a slow grid layout; both fixed.
 - **Ready to share:** a demo database builder, new screenshots, the README, a GitHub Actions
   workflow, and the docs: [WALKTHROUGH](docs/WALKTHROUGH.md), [GLOSSARY](docs/GLOSSARY.md),
   and [CHANGES](docs/CHANGES.md).
@@ -248,6 +251,8 @@ After the build order:
 - Recipes imported from meal-kit sites can read "2 unit sweet potatoes": the importer
   doesn't yet treat "unit" as a count.
 - Flavor profiles ignore amounts (a pinch of chili counts like a spoonful).
+- TheMealDB recipes have estimated times: steps that say "marinate overnight" add nothing,
+  and "chill for 12 hours" counts in full. Servings are always a guess of 4.
 - Volume and weight don't convert into each other (that needs a density per ingredient).
 
 ## Ideas for later

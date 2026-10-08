@@ -27,9 +27,10 @@ function renderRecipe(recipe) {
   descriptionEl.hidden = !recipe.description;
 
   document.getElementById("fact-cuisine").textContent = recipe.cuisine || "Not set";
-  document.getElementById("fact-prep").textContent = formatMinutes(recipe.prep_time);
-  document.getElementById("fact-cook").textContent = formatMinutes(recipe.cook_time);
-  document.getElementById("fact-total").textContent = formatMinutes(recipe.total_time);
+  document.getElementById("fact-prep").textContent = capitalize(recipeTime(recipe, recipe.prep_time)) || "Not given";
+  document.getElementById("fact-cook").textContent = capitalize(recipeTime(recipe, recipe.cook_time)) || "Not given";
+  document.getElementById("fact-total").textContent = capitalize(recipeTime(recipe)) || "Not given";
+  renderEstimateNote(recipe);
 
   // Instructions are stored one step per line.
   const steps = recipe.instructions.split("\n").map((s) => s.trim()).filter(Boolean);
@@ -414,6 +415,17 @@ function renderSource(recipe) {
   const link = document.getElementById("source-link");
   link.href = recipe.source_url;
   link.textContent = new URL(recipe.source_url).hostname.replace(/^www\./, "");
+}
+
+// Says which facts Slice'd worked out itself, for sources that don't give them.
+function renderEstimateNote(recipe) {
+  const parts = [];
+  if (recipe.time_status === "estimated") parts.push("The times are estimated from the steps.");
+  if (recipe.time_status === "unknown") parts.push("The recipe doesn't say how long it takes.");
+  if (recipe.servings_estimated) parts.push("The number of servings is a guess.");
+  const noteEl = document.getElementById("estimate-note");
+  noteEl.textContent = parts.length ? `${parts.join(" ")} Edit the recipe to put in your own.` : "";
+  noteEl.hidden = parts.length === 0;
 }
 
 // ---------- Photo ----------

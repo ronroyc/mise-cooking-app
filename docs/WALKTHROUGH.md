@@ -373,6 +373,16 @@ Slice'd uses, and opens `recipe-form.html#import=<data>`. The form posts that to
 `/api/recipes/import-data`, and `history.replaceState` removes it from the address bar so a
 reload doesn't import twice.
 
+TheMealDB's catalog comes in a different way: a command, not a page.
+`python -m app.database.mealdb` (in `database/`) asks TheMealDB for every recipe, one request
+per first letter, and `services/mealdb.py` converts each one. TheMealDB already keeps the
+amount apart from the name ("3/4 cup" + "soy sauce"), so only the amount needs parsing
+(`recipe_import.parse_amount`). It has no times or servings: cook time is the sum of the
+times written in the steps, prep is 2 minutes per ingredient, and `time_status` records that
+they're estimates ("estimated", or "unknown" when the steps mention no times). The pages show
+these as "about 45 min" (`recipeTime()` in `common.js`). Each recipe's `source_url` is its
+TheMealDB page, which is how a second run knows what's already there.
+
 ### 4.9 Photos
 Uploads are checked by their first bytes ("magic numbers": JPEG starts `FF D8 FF`, PNG with
 `\x89PNG`), not by file name, so a renamed text file can't pass as a photo. The limit is
@@ -422,7 +432,9 @@ CSS grid can't pack cards of different heights into columns by itself. The trick
 it is tall (`grid-row-end: span 312`). The browser then packs cards into the shortest column.
 A `ResizeObserver` re-measures a card when its size changes (a photo loads, the window
 resizes). Unlike CSS columns, this keeps the cards in order for keyboard and screen-reader
-users.
+users. `layoutCards()` measures every card first and only then sets the spans: measuring
+right after a change forces the browser to redo the whole layout, and doing that once per
+card took several seconds with 800 recipes ("layout thrashing").
 
 ### 5.3 The radar chart
 Drawn by hand as SVG in `profile.js`, with no chart library. Each of the 8 flavors is an
@@ -571,7 +583,7 @@ never changes the recipe or its color: it's advice.
 
 ---
 
-## 7. The tests (about 470)
+## 7. The tests (about 520)
 
 **How they're set up (`conftest.py`):**
 - `session_factory`: a brand-new SQLite file in a temporary folder for every test, so tests

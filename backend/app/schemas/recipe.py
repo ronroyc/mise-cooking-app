@@ -189,6 +189,13 @@ class RecipeSummary(BaseModel):
     pinned: bool = False
     photo_url: Optional[str] = None  # None: the card shows a plain colored cover
     source_url: Optional[str] = None  # imported recipes link back to the site
+    time_status: Optional[Literal["estimated", "unknown"]] = None  # None: the times are as written
+    servings_estimated: bool = False  # servings is a guess (the source didn't say)
+
+    @field_validator("servings_estimated", mode="before")
+    @classmethod
+    def null_is_false(cls, value):
+        return bool(value)
 
 
 class SwapOption(BaseModel):
