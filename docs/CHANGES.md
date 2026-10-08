@@ -275,3 +275,10 @@ along the way. Terms are explained in [GLOSSARY.md](GLOSSARY.md); how the code w
     1.2 s.
 - **Tests:** 45 new (amount parsing, time estimates, titles, cuisines, saving, removing,
   the time filter, and edits clearing estimates); all 519 pass.
+
+---
+
+## Oct 7: repository and file names
+
+- **What:** the GitHub repository is now `sliced` and the database file `data/sliced.db`,
+  matching the app's name. GitHub redirects the repository's old address.
